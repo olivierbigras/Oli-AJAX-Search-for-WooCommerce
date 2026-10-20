@@ -36,6 +36,7 @@ class Oli_AS_Search {
 			'products'   => array(),
 			'categories' => array(),
 			'tags'       => array(),
+			'brands'     => array(),
 			'attributes' => array(),
 			'posts'      => array(),
 			'pages'      => array(),
@@ -50,6 +51,7 @@ class Oli_AS_Search {
 			'category'  => (int) Oli_AS_Settings::get( 'max_categories', 3 ),
 			'tag'       => (int) Oli_AS_Settings::get( 'max_tags', 3 ),
 			'attribute' => (int) Oli_AS_Settings::get( 'max_attributes', 3 ),
+			'brand'     => (int) Oli_AS_Settings::get( 'max_brands', 3 ),
 			'post'      => (int) Oli_AS_Settings::get( 'max_posts', 2 ),
 			'page'      => (int) Oli_AS_Settings::get( 'max_pages', 2 ),
 		);
@@ -60,6 +62,7 @@ class Oli_AS_Search {
 			'category'  => array(),
 			'tag'       => array(),
 			'attribute' => array(),
+			'brand'     => array(),
 			'post'      => array(),
 			'page'      => array(),
 		);
@@ -72,12 +75,13 @@ class Oli_AS_Search {
 			if ( count( $bucket[ $type ] ) >= $limits[ $type ] ) {
 				continue;
 			}
-			$bucket[ $type ][] = $this->hydrate( $row );
+			$bucket[ $type ][] = $this->hydrate( $row, $query );
 		}
 
 		$groups['products']   = $bucket['product'];
 		$groups['categories'] = $bucket['category'];
 		$groups['tags']       = $bucket['tag'];
+		$groups['brands']     = $bucket['brand'];
 		$groups['attributes'] = $bucket['attribute'];
 		$groups['posts']      = $bucket['post'];
 		$groups['pages']      = $bucket['page'];
@@ -195,7 +199,8 @@ class Oli_AS_Search {
 		global $wpdb;
 
 		$map   = array();
-		$fuzzy = Oli_AS_Settings::enabled( 'fuzzy' );
+		$level = Oli_AS_Settings::fuzzy_level();
+		$fuzzy = ( 'off' !== $level );
 
 		foreach ( $tokens as $token ) {
 			$map[ $token ] = $token;
@@ -209,7 +214,7 @@ class Oli_AS_Search {
 				}
 			}
 
-			if ( ! $fuzzy || mb_strlen( $token, 'UTF-8' ) < 4 ) {
+			if ( ! $fuzzy || mb_strlen( $token, 'UTF-8' ) < 3 ) {
 				continue;
 			}
 
@@ -219,7 +224,7 @@ class Oli_AS_Search {
 			$candidates = $wpdb->get_col( $wpdb->prepare( "SELECT term FROM {$dict} WHERE language = %s AND term LIKE %s LIMIT 80", $lang, $plike ) );
 			if ( is_array( $candidates ) ) {
 				foreach ( $candidates as $candidate ) {
-					if ( Oli_AS_Relevance::is_fuzzy_match( $token, $candidate ) ) {
+					if ( Oli_AS_Relevance::is_fuzzy_match( $token, $candidate, $level ) ) {
 						$map[ $candidate ] = $token;
 					}
 				}
@@ -267,10 +272,11 @@ class Oli_AS_Search {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param array<string, mixed> $row Database row.
+	 * @param array<string, mixed> $row   Database row.
+	 * @param string               $query Raw query used for exact variation SKU matches.
 	 * @return array<string, mixed>
 	 */
-	protected function hydrate( $row ) {
+	protected function hydrate( $row, $query = '' ) {
 		$extra = array();
 		if ( ! empty( $row['extra'] ) ) {
 			$decoded = json_decode( $row['extra'], true );
@@ -303,10 +309,45 @@ class Oli_AS_Search {
 				if ( empty( $item['image'] ) ) {
 					$item['image'] = wc_placeholder_img_src( 'woocommerce_thumbnail' );
 				}
+
+				$matched = $this->matching_variation( $query, $extra );
+				if ( $matched ) {
+					$variation = wc_get_product( $matched['id'] );
+					if ( $variation ) {
+						$item['sku']             = $variation->get_sku();
+						$item['url']             = $matched['url'];
+						$item['add_to_cart_url'] = $variation->add_to_cart_url();
+						$item['price_html']      = Oli_AS_Compat_Multicurrency::price_html( $variation );
+						$item['type']            = 'product';
+					}
+				}
 			}
 		}
 
 		return $item;
+	}
+
+	/**
+	 * Finds an exact variation SKU match for the raw query.
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param string               $query Raw query.
+	 * @param array<string, mixed> $extra Extra document data.
+	 * @return array<string, mixed>|null
+	 */
+	protected function matching_variation( $query, $extra ) {
+		if ( empty( $extra['variation_skus'] ) || ! is_array( $extra['variation_skus'] ) ) {
+			return null;
+		}
+
+		$needle = strtolower( trim( (string) $query ) );
+		foreach ( $extra['variation_skus'] as $sku => $data ) {
+			if ( strtolower( (string) $sku ) === $needle && is_array( $data ) ) {
+				return $data;
+			}
+		}
+		return null;
 	}
 
 	/**

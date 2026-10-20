@@ -46,10 +46,19 @@ class Oli_AS_Settings {
 			'max_categories'       => 3,
 			'max_tags'             => 3,
 			'max_attributes'       => 3,
+			'max_brands'           => 3,
 			'max_posts'            => 2,
 			'max_pages'            => 2,
 			'layout'               => 'classic',
 			'mobile_overlay'       => '1',
+			'mobile_breakpoint'    => 782,
+			'darken_background'    => '1',
+			'show_submit'          => '1',
+			'submit_text'          => '',
+			'no_results_text'      => '',
+			'see_all_text'         => '',
+			'show_preloader'       => '1',
+			'max_form_width'       => 0,
 			'replace_theme_form'   => '1',
 			'show_image'           => '1',
 			'show_price'           => '1',
@@ -69,6 +78,10 @@ class Oli_AS_Settings {
 			'search_custom_fields' => '1',
 			'custom_fields'        => '',
 			'fuzzy'                => '1',
+			'fuzzy_level'          => 'normal',
+			'search_gtin'          => '1',
+			'filter_mode'          => 'exclude',
+			'scheduled_rebuild'    => '0',
 			'synonyms'             => '',
 			'stopwords'            => 'the,and,for,with,from,this,that,les,des,une,pour,avec,dans',
 			'exclude_ids'          => '',
@@ -81,6 +94,7 @@ class Oli_AS_Settings {
 			'color_accent'         => '#2271b1',
 			'color_hover'          => '#f4f7fb',
 			'color_price'          => '#111111',
+			'color_highlight'      => '#fff3bf',
 			'weight_title'         => 10,
 			'weight_sku'           => 12,
 			'weight_excerpt'       => 4,
@@ -163,9 +177,9 @@ class Oli_AS_Settings {
 	 * @return array<string, mixed>
 	 */
 	public static function sanitize( $input ) {
-		$defaults = self::defaults();
-		$output   = $defaults;
-		$input    = is_array( $input ) ? $input : array();
+		$stored = get_option( self::OPTION, array() );
+		$output = array_merge( self::defaults(), is_array( $stored ) ? $stored : array() );
+		$input  = is_array( $input ) ? $input : array();
 
 		$text_keys = array(
 			'placeholder',
@@ -175,6 +189,9 @@ class Oli_AS_Settings {
 			'exclude_ids',
 			'exclude_cat_ids',
 			'brand_taxonomies',
+			'submit_text',
+			'no_results_text',
+			'see_all_text',
 		);
 
 		foreach ( $text_keys as $key ) {
@@ -188,22 +205,25 @@ class Oli_AS_Settings {
 		}
 
 		$int_keys = array(
-			'min_chars'        => array( 1, 10 ),
-			'debounce_ms'      => array( 50, 2000 ),
-			'max_products'     => array( 1, 30 ),
-			'max_categories'   => array( 0, 20 ),
-			'max_tags'         => array( 0, 20 ),
-			'max_attributes'   => array( 0, 20 ),
-			'max_posts'        => array( 0, 20 ),
-			'max_pages'        => array( 0, 20 ),
-			'weight_title'     => array( 0, 50 ),
-			'weight_sku'       => array( 0, 50 ),
-			'weight_excerpt'   => array( 0, 50 ),
-			'weight_content'   => array( 0, 50 ),
-			'weight_attribute' => array( 0, 50 ),
-			'weight_meta'      => array( 0, 50 ),
-			'weight_taxonomy'  => array( 0, 50 ),
-			'index_batch_size' => array( 10, 200 ),
+			'min_chars'         => array( 1, 10 ),
+			'debounce_ms'       => array( 50, 2000 ),
+			'max_products'      => array( 1, 30 ),
+			'max_categories'    => array( 0, 20 ),
+			'max_tags'          => array( 0, 20 ),
+			'max_attributes'    => array( 0, 20 ),
+			'max_brands'        => array( 0, 20 ),
+			'max_posts'         => array( 0, 20 ),
+			'max_pages'         => array( 0, 20 ),
+			'mobile_breakpoint' => array( 320, 1600 ),
+			'max_form_width'    => array( 0, 1600 ),
+			'weight_title'      => array( 0, 50 ),
+			'weight_sku'        => array( 0, 50 ),
+			'weight_excerpt'    => array( 0, 50 ),
+			'weight_content'    => array( 0, 50 ),
+			'weight_attribute'  => array( 0, 50 ),
+			'weight_meta'       => array( 0, 50 ),
+			'weight_taxonomy'   => array( 0, 50 ),
+			'index_batch_size'  => array( 10, 200 ),
 		);
 
 		foreach ( $int_keys as $key => $range ) {
@@ -212,8 +232,21 @@ class Oli_AS_Settings {
 			}
 		}
 
-		$layouts          = array( 'classic', 'icon' );
-		$output['layout'] = ( isset( $input['layout'] ) && in_array( $input['layout'], $layouts, true ) ) ? $input['layout'] : 'classic';
+		if ( isset( $input['layout'] ) ) {
+			$layouts          = array( 'classic', 'icon' );
+			$output['layout'] = in_array( $input['layout'], $layouts, true ) ? $input['layout'] : 'classic';
+		}
+
+		if ( isset( $input['fuzzy_level'] ) ) {
+			$levels                = array( 'off', 'soft', 'normal', 'hard' );
+			$output['fuzzy_level'] = in_array( $input['fuzzy_level'], $levels, true ) ? $input['fuzzy_level'] : 'normal';
+			$output['fuzzy']       = ( 'off' === $output['fuzzy_level'] ) ? '0' : '1';
+		}
+
+		if ( isset( $input['filter_mode'] ) ) {
+			$modes                 = array( 'exclude', 'include' );
+			$output['filter_mode'] = in_array( $input['filter_mode'], $modes, true ) ? $input['filter_mode'] : 'exclude';
+		}
 
 		$checkboxes = array(
 			'mobile_overlay',
@@ -234,7 +267,11 @@ class Oli_AS_Settings {
 			'search_attributes',
 			'search_taxonomies',
 			'search_custom_fields',
-			'fuzzy',
+			'search_gtin',
+			'darken_background',
+			'show_submit',
+			'show_preloader',
+			'scheduled_rebuild',
 			'hide_out_of_stock',
 			'use_on_results_page',
 			'index_posts',
@@ -242,10 +279,14 @@ class Oli_AS_Settings {
 		);
 
 		foreach ( $checkboxes as $key ) {
-			$output[ $key ] = ( ! empty( $input[ $key ] ) ) ? '1' : '0';
+			if ( isset( $input['_seen'] ) && is_array( $input['_seen'] ) && isset( $input['_seen'][ $key ] ) ) {
+				$output[ $key ] = ( ! empty( $input[ $key ] ) ) ? '1' : '0';
+			} elseif ( isset( $input[ $key ] ) ) {
+				$output[ $key ] = ( ! empty( $input[ $key ] ) ) ? '1' : '0';
+			}
 		}
 
-		$colors = array( 'color_bg', 'color_text', 'color_border', 'color_accent', 'color_hover', 'color_price' );
+		$colors = array( 'color_bg', 'color_text', 'color_border', 'color_accent', 'color_hover', 'color_price', 'color_highlight' );
 		foreach ( $colors as $key ) {
 			if ( isset( $input[ $key ] ) ) {
 				$color = sanitize_hex_color( wp_unslash( $input[ $key ] ) );
@@ -357,6 +398,21 @@ class Oli_AS_Settings {
 			}
 		}
 		return array_values( array_unique( $keys ) );
+	}
+
+	/**
+	 * Fuzzy matching level.
+	 *
+	 * @since 0.1.1
+	 *
+	 * @return string off|soft|normal|hard
+	 */
+	public static function fuzzy_level() {
+		$level = (string) self::get( 'fuzzy_level', '' );
+		if ( in_array( $level, array( 'off', 'soft', 'normal', 'hard' ), true ) ) {
+			return $level;
+		}
+		return self::enabled( 'fuzzy' ) ? 'normal' : 'off';
 	}
 
 	/**

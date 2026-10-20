@@ -174,7 +174,8 @@ class Oli_AS_Admin {
 						'max_products'   => __( 'Products', 'oli-ajax-search' ),
 						'max_categories' => __( 'Categories', 'oli-ajax-search' ),
 						'max_tags'       => __( 'Tags', 'oli-ajax-search' ),
-						'max_attributes' => __( 'Attributes / brands', 'oli-ajax-search' ),
+						'max_brands'     => __( 'Brands', 'oli-ajax-search' ),
+						'max_attributes' => __( 'Attributes', 'oli-ajax-search' ),
 						'max_posts'      => __( 'Posts', 'oli-ajax-search' ),
 						'max_pages'      => __( 'Pages', 'oli-ajax-search' ),
 					);
@@ -199,8 +200,37 @@ class Oli_AS_Admin {
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><label for="oli_as_mobile_breakpoint"><?php esc_html_e( 'Mobile breakpoint (px)', 'oli-ajax-search' ); ?></label></th>
+				<td><input type="number" min="320" max="1600" id="oli_as_mobile_breakpoint" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[mobile_breakpoint]" value="<?php echo esc_attr( $settings['mobile_breakpoint'] ); ?>" /></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="oli_as_max_form_width"><?php esc_html_e( 'Maximum form width (px)', 'oli-ajax-search' ); ?></label></th>
+				<td>
+					<input type="number" min="0" max="1600" id="oli_as_max_form_width" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[max_form_width]" value="<?php echo esc_attr( $settings['max_form_width'] ); ?>" />
+					<p class="description"><?php esc_html_e( 'Use 0 for the default width.', 'oli-ajax-search' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="oli_as_submit_text"><?php esc_html_e( 'Submit button text', 'oli-ajax-search' ); ?></label></th>
+				<td>
+					<input class="regular-text" type="text" id="oli_as_submit_text" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[submit_text]" value="<?php echo esc_attr( $settings['submit_text'] ); ?>" />
+					<p class="description"><?php esc_html_e( 'Leave empty to show a search icon only.', 'oli-ajax-search' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="oli_as_no_results"><?php esc_html_e( 'No results text', 'oli-ajax-search' ); ?></label></th>
+				<td><input class="regular-text" type="text" id="oli_as_no_results" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[no_results_text]" value="<?php echo esc_attr( $settings['no_results_text'] ); ?>" /></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="oli_as_see_all"><?php esc_html_e( 'See all results text', 'oli-ajax-search' ); ?></label></th>
+				<td><input class="regular-text" type="text" id="oli_as_see_all" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[see_all_text]" value="<?php echo esc_attr( $settings['see_all_text'] ); ?>" /></td>
+			</tr>
 			<?php
 			$this->checkbox( 'mobile_overlay', __( 'Use a full-screen overlay on mobile', 'oli-ajax-search' ), $settings );
+			$this->checkbox( 'darken_background', __( 'Darken the page behind suggestions', 'oli-ajax-search' ), $settings );
+			$this->checkbox( 'show_submit', __( 'Show a submit button', 'oli-ajax-search' ), $settings );
+			$this->checkbox( 'show_preloader', __( 'Show a loading indicator while fetching suggestions', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'replace_theme_form', __( 'Replace theme and WooCommerce search forms', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'show_image', __( 'Show product image', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'show_price', __( 'Show price', 'oli-ajax-search' ), $settings );
@@ -236,11 +266,33 @@ class Oli_AS_Admin {
 			$this->checkbox( 'search_attributes', __( 'Search attributes', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'search_taxonomies', __( 'Search taxonomies', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'search_custom_fields', __( 'Search custom fields', 'oli-ajax-search' ), $settings );
-			$this->checkbox( 'fuzzy', __( 'Fuzzy matching / typo tolerance', 'oli-ajax-search' ), $settings );
+			$this->checkbox( 'search_gtin', __( 'Search GTIN / UPC / EAN / ISBN', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'hide_out_of_stock', __( 'Hide out-of-stock products', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'index_posts', __( 'Index posts', 'oli-ajax-search' ), $settings );
 			$this->checkbox( 'index_pages', __( 'Index pages', 'oli-ajax-search' ), $settings );
+			$this->checkbox( 'scheduled_rebuild', __( 'Rebuild the index daily during maintenance', 'oli-ajax-search' ), $settings );
 			?>
+			<tr>
+				<th scope="row"><label for="oli_as_fuzzy_level"><?php esc_html_e( 'Typo tolerance', 'oli-ajax-search' ); ?></label></th>
+				<td>
+					<select id="oli_as_fuzzy_level" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[fuzzy_level]">
+						<option value="off" <?php selected( $settings['fuzzy_level'], 'off' ); ?>><?php esc_html_e( 'Off', 'oli-ajax-search' ); ?></option>
+						<option value="soft" <?php selected( $settings['fuzzy_level'], 'soft' ); ?>><?php esc_html_e( 'Soft', 'oli-ajax-search' ); ?></option>
+						<option value="normal" <?php selected( $settings['fuzzy_level'], 'normal' ); ?>><?php esc_html_e( 'Normal', 'oli-ajax-search' ); ?></option>
+						<option value="hard" <?php selected( $settings['fuzzy_level'], 'hard' ); ?>><?php esc_html_e( 'Hard', 'oli-ajax-search' ); ?></option>
+					</select>
+					<p class="description"><?php esc_html_e( 'Soft needs longer words and one typo. Hard allows shorter words and more typos.', 'oli-ajax-search' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="oli_as_filter_mode"><?php esc_html_e( 'Product filter mode', 'oli-ajax-search' ); ?></label></th>
+				<td>
+					<select id="oli_as_filter_mode" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[filter_mode]">
+						<option value="exclude" <?php selected( $settings['filter_mode'], 'exclude' ); ?>><?php esc_html_e( 'Exclude the IDs below', 'oli-ajax-search' ); ?></option>
+						<option value="include" <?php selected( $settings['filter_mode'], 'include' ); ?>><?php esc_html_e( 'Include only the IDs below', 'oli-ajax-search' ); ?></option>
+					</select>
+				</td>
+			</tr>
 			<tr>
 				<th scope="row"><label for="oli_as_custom_fields"><?php esc_html_e( 'Custom field keys', 'oli-ajax-search' ); ?></label></th>
 				<td>
@@ -262,11 +314,14 @@ class Oli_AS_Admin {
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="oli_as_exclude_ids"><?php esc_html_e( 'Excluded product IDs', 'oli-ajax-search' ); ?></label></th>
-				<td><input class="regular-text" type="text" id="oli_as_exclude_ids" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[exclude_ids]" value="<?php echo esc_attr( $settings['exclude_ids'] ); ?>" /></td>
+				<th scope="row"><label for="oli_as_exclude_ids"><?php esc_html_e( 'Product IDs', 'oli-ajax-search' ); ?></label></th>
+				<td>
+					<input class="regular-text" type="text" id="oli_as_exclude_ids" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[exclude_ids]" value="<?php echo esc_attr( $settings['exclude_ids'] ); ?>" />
+					<p class="description"><?php esc_html_e( 'Comma-separated. Used as include or exclude depending on the filter mode.', 'oli-ajax-search' ); ?></p>
+				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="oli_as_exclude_cats"><?php esc_html_e( 'Excluded category IDs', 'oli-ajax-search' ); ?></label></th>
+				<th scope="row"><label for="oli_as_exclude_cats"><?php esc_html_e( 'Category IDs', 'oli-ajax-search' ); ?></label></th>
 				<td><input class="regular-text" type="text" id="oli_as_exclude_cats" name="<?php echo esc_attr( Oli_AS_Settings::OPTION ); ?>[exclude_cat_ids]" value="<?php echo esc_attr( $settings['exclude_cat_ids'] ); ?>" /></td>
 			</tr>
 			<tr>
@@ -312,12 +367,13 @@ class Oli_AS_Admin {
 	 */
 	protected function render_appearance( $settings ) {
 		$colors = array(
-			'color_bg'     => __( 'Background', 'oli-ajax-search' ),
-			'color_text'   => __( 'Text', 'oli-ajax-search' ),
-			'color_border' => __( 'Border', 'oli-ajax-search' ),
-			'color_accent' => __( 'Accent', 'oli-ajax-search' ),
-			'color_hover'  => __( 'Suggestion hover', 'oli-ajax-search' ),
-			'color_price'  => __( 'Price', 'oli-ajax-search' ),
+			'color_bg'        => __( 'Background', 'oli-ajax-search' ),
+			'color_text'      => __( 'Text', 'oli-ajax-search' ),
+			'color_border'    => __( 'Border', 'oli-ajax-search' ),
+			'color_accent'    => __( 'Accent', 'oli-ajax-search' ),
+			'color_hover'     => __( 'Suggestion hover', 'oli-ajax-search' ),
+			'color_price'     => __( 'Price', 'oli-ajax-search' ),
+			'color_highlight' => __( 'Matched text highlight', 'oli-ajax-search' ),
 		);
 		echo '<table class="form-table" role="presentation">';
 		foreach ( $colors as $key => $label ) {
@@ -367,7 +423,7 @@ class Oli_AS_Admin {
 			<p>
 				<button type="button" class="button button-primary" id="oli-as-rebuild"><?php esc_html_e( 'Rebuild index', 'oli-ajax-search' ); ?></button>
 			</p>
-			<p class="description"><?php esc_html_e( 'The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally.', 'oli-ajax-search' ); ?></p>
+			<p class="description"><?php esc_html_e( 'The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally. Daily rebuild can be enabled on the Search tab.', 'oli-ajax-search' ); ?></p>
 			<?php if ( Oli_AS_Compat_TranslatePress::is_active() ) : ?>
 				<p class="description"><?php esc_html_e( 'TranslatePress is active. Product titles and descriptions are indexed per published language and searched in the current language.', 'oli-ajax-search' ); ?></p>
 			<?php endif; ?>
@@ -440,6 +496,7 @@ class Oli_AS_Admin {
 	protected function checkbox( $key, $label, $settings ) {
 		$checked = ! empty( $settings[ $key ] ) && '0' !== (string) $settings[ $key ];
 		echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td>';
+		echo '<input type="hidden" name="' . esc_attr( Oli_AS_Settings::OPTION ) . '[_seen][' . esc_attr( $key ) . ']" value="1" />';
 		echo '<label><input type="checkbox" name="' . esc_attr( Oli_AS_Settings::OPTION ) . '[' . esc_attr( $key ) . ']" value="1" ' . checked( $checked, true, false ) . ' /> ' . esc_html( $label ) . '</label>';
 		echo '</td></tr>';
 	}

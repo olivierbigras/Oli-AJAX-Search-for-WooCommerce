@@ -56,6 +56,33 @@
 			.replace(/"/g, '&quot;');
 	}
 
+	function escapeRegExp(value) {
+		return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	}
+
+	function highlight(text, query) {
+		var escaped = escapeHtml(text);
+		if (!query) {
+			return escaped;
+		}
+		var tokens = String(query)
+			.toLowerCase()
+			.split(/\s+/)
+			.filter(function (token) {
+				return token.length >= 2;
+			});
+		tokens.forEach(function (token) {
+			var re = new RegExp('(' + escapeRegExp(token) + ')', 'ig');
+			escaped = escaped.replace(re, '<mark class="oli-as-highlight">$1</mark>');
+		});
+		return escaped;
+	}
+
+	function isMobile() {
+		var width = cfg.mobileBreakpoint || 782;
+		return window.matchMedia('(max-width: ' + width + 'px)').matches;
+	}
+
 	function fetchSuggestions(query) {
 		var suffix = 'q=' + encodeURIComponent(query) + '&lang=' + encodeURIComponent(cfg.lang);
 		var pretty = (cfg.prettyUrl || '') + ((cfg.prettyUrl || '').indexOf('?') === -1 ? '?' : '&') + suffix;
@@ -92,7 +119,7 @@
 		});
 	}
 
-	function renderGroup(title, items, type) {
+	function renderGroup(title, items, type, query) {
 		if (!items || !items.length) {
 			return '';
 		}
@@ -102,7 +129,7 @@
 			if (item.image) {
 				html += '<img src="' + escapeHtml(item.image) + '" alt="" />';
 			}
-			html += '<span class="oli-as-item-body"><span class="oli-as-item-title">' + escapeHtml(item.title) + '</span>';
+			html += '<span class="oli-as-item-body"><span class="oli-as-item-title">' + highlight(item.title, query) + '</span>';
 			if (item.price_html) {
 				html += '<span class="oli-as-item-meta oli-as-item-price">' + item.price_html + '</span>';
 			}
@@ -114,7 +141,7 @@
 		return html;
 	}
 
-	function renderDetails(item) {
+	function renderDetails(item, query) {
 		if (!item || item.type !== 'product') {
 			return '';
 		}
@@ -122,7 +149,7 @@
 		if (item.image) {
 			html += '<img src="' + escapeHtml(item.image) + '" alt="" />';
 		}
-		html += '<h3 class="oli-as-details-title">' + escapeHtml(item.title) + '</h3>';
+		html += '<h3 class="oli-as-details-title">' + highlight(item.title, query) + '</h3>';
 		if (item.price_html) {
 			html += '<div class="oli-as-item-price">' + item.price_html + '</div>';
 		}
@@ -142,7 +169,7 @@
 	}
 
 	function flatten(groups) {
-		var order = ['products', 'categories', 'tags', 'attributes', 'posts', 'pages'];
+		var order = ['products', 'categories', 'tags', 'brands', 'attributes', 'posts', 'pages'];
 		var list = [];
 		order.forEach(function (key) {
 			(groups[key] || []).forEach(function (item) {
@@ -162,6 +189,8 @@
 		var items = [];
 		var active = -1;
 		var overlay = null;
+		var lastQuery = '';
+		var preloader = qs(root, '.oli-as-preloader');
 
 		if (!form || !input || !panel || !list) {
 			return;
@@ -180,15 +209,29 @@
 					var item = items.filter(function (row) {
 						return row.url === href;
 					})[0];
-					var html = renderDetails(item);
+					var html = renderDetails(item, lastQuery);
 					details.innerHTML = html;
 					details.hidden = !html;
 				}
 			}
 		}
 
+		function syncDarken() {
+			if (!cfg.darkenBackground) {
+				return;
+			}
+			document.body.classList.toggle('oli-as-darken', !panel.hidden || !!overlay);
+		}
+
+		function setLoading(on) {
+			if (preloader && cfg.showPreloader) {
+				preloader.hidden = !on;
+			}
+		}
+
 		function openPanel() {
 			panel.hidden = false;
+			syncDarken();
 		}
 
 		function closePanel() {
@@ -196,6 +239,7 @@
 			if (details) {
 				details.hidden = true;
 			}
+			syncDarken();
 		}
 
 		function showRecent() {
@@ -223,13 +267,15 @@
 
 		function paint(data) {
 			items = flatten(data.groups || {});
+			lastQuery = (data && data.query) || input.value.trim();
 			var html = '';
-			html += renderGroup(cfg.i18n.products, (data.groups || {}).products, 'product');
-			html += renderGroup(cfg.i18n.categories, (data.groups || {}).categories, 'category');
-			html += renderGroup(cfg.i18n.tags, (data.groups || {}).tags, 'tag');
-			html += renderGroup(cfg.i18n.attributes, (data.groups || {}).attributes, 'attribute');
-			html += renderGroup(cfg.i18n.posts, (data.groups || {}).posts, 'post');
-			html += renderGroup(cfg.i18n.pages, (data.groups || {}).pages, 'page');
+			html += renderGroup(cfg.i18n.products, (data.groups || {}).products, 'product', lastQuery);
+			html += renderGroup(cfg.i18n.categories, (data.groups || {}).categories, 'category', lastQuery);
+			html += renderGroup(cfg.i18n.tags, (data.groups || {}).tags, 'tag', lastQuery);
+			html += renderGroup(cfg.i18n.brands, (data.groups || {}).brands, 'brand', lastQuery);
+			html += renderGroup(cfg.i18n.attributes, (data.groups || {}).attributes, 'attribute', lastQuery);
+			html += renderGroup(cfg.i18n.posts, (data.groups || {}).posts, 'post', lastQuery);
+			html += renderGroup(cfg.i18n.pages, (data.groups || {}).pages, 'page', lastQuery);
 			if (!items.length) {
 				html = '<p class="oli-as-empty">' + escapeHtml(cfg.i18n.noResults) + '</p>';
 			} else if (data.results_url) {
@@ -255,11 +301,15 @@
 				}
 				return;
 			}
+			setLoading(true);
 			fetchSuggestions(query).then(function (data) {
+				setLoading(false);
 				if (!data) {
 					return;
 				}
 				paint(data);
+			}).catch(function () {
+				setLoading(false);
 			});
 		}, cfg.debounce || 180);
 
@@ -268,7 +318,7 @@
 			if (!input.value.trim()) {
 				showRecent();
 			}
-			if (cfg.mobileOverlay && window.matchMedia('(max-width: 782px)').matches) {
+			if (cfg.mobileOverlay && isMobile()) {
 				openOverlay();
 			}
 		});
@@ -325,6 +375,7 @@
 			overlay.insertBefore(root, overlay.firstChild.nextSibling);
 			qs(overlay, '.oli-as-close').addEventListener('click', closeOverlay);
 			input.focus();
+			syncDarken();
 		}
 
 		function closeOverlay() {
@@ -344,6 +395,7 @@
 			}
 			overlay.parentNode.removeChild(overlay);
 			overlay = null;
+			syncDarken();
 		}
 
 		root._home = document.createComment('oli-as-home');

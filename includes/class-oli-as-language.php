@@ -5,7 +5,9 @@
  * @package Oli_Ajax_Search
  */
 
-defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) && ! defined( 'OLI_AS_TEST_BOOTSTRAP' ) ) {
+	exit;
+}
 
 /**
  * Facade over TranslatePress, WPML, and Polylang.
@@ -47,7 +49,9 @@ class Oli_AS_Language {
 		add_filter( 'oli_as_current_language', array( $this, 'filter_current_language' ) );
 		add_filter( 'oli_as_languages', array( $this, 'filter_languages' ) );
 		add_filter( 'oli_as_translate_text', array( $this, 'filter_translate_text' ), 10, 3 );
+		add_filter( 'oli_as_translate_html', array( $this, 'filter_translate_html' ), 10, 3 );
 		add_filter( 'oli_as_translate_url', array( $this, 'filter_translate_url' ), 10, 2 );
+		Oli_AS_Compat_TranslatePress::init();
 	}
 
 	/**
@@ -97,6 +101,20 @@ class Oli_AS_Language {
 	 */
 	public function translate( $text, $lang ) {
 		$translated = apply_filters( 'oli_as_translate_text', $text, $lang, $text );
+		return is_string( $translated ) ? $translated : (string) $text;
+	}
+
+	/**
+	 * Translates a longer HTML or multi-phrase block.
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param string $text Source text.
+	 * @param string $lang Target language.
+	 * @return string
+	 */
+	public function translate_html( $text, $lang ) {
+		$translated = apply_filters( 'oli_as_translate_html', $text, $lang, $text );
 		return is_string( $translated ) ? $translated : (string) $text;
 	}
 
@@ -202,6 +220,23 @@ class Oli_AS_Language {
 	}
 
 	/**
+	 * Filter wrapper for HTML translation.
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param string $text     Translated or original text.
+	 * @param string $lang     Target language.
+	 * @param string $original Original text.
+	 * @return string
+	 */
+	public function filter_translate_html( $text, $lang, $original ) {
+		if ( Oli_AS_Compat_TranslatePress::is_active() ) {
+			return Oli_AS_Compat_TranslatePress::translate_html( $original, $lang );
+		}
+		return $this->translate( $original, $lang );
+	}
+
+	/**
 	 * Filter wrapper for URL translation.
 	 *
 	 * @since 0.1.0
@@ -250,9 +285,49 @@ class Oli_AS_Language {
 	 */
 	public function from_request( $requested = '' ) {
 		$requested = $this->normalize_code( $requested );
-		if ( 'default' !== $requested && in_array( $requested, $this->languages(), true ) ) {
-			return $requested;
+		$languages = $this->languages();
+		foreach ( $languages as $lang ) {
+			if ( $this->same_language( $requested, $lang ) ) {
+				return $lang;
+			}
 		}
-		return $this->current();
+
+		$current = $this->current();
+		foreach ( $languages as $lang ) {
+			if ( $this->same_language( $current, $lang ) ) {
+				return $lang;
+			}
+		}
+
+		return $current;
+	}
+
+	/**
+	 * Whether two language codes refer to the same language.
+	 *
+	 * Accepts both URL slugs (fr) and locales (fr_FR / fr_fr).
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param string $left  First code.
+	 * @param string $right Second code.
+	 * @return bool
+	 */
+	public function same_language( $left, $right ) {
+		$left  = $this->normalize_code( $left );
+		$right = $this->normalize_code( $right );
+		if ( $left === $right ) {
+			return true;
+		}
+		if ( 'default' === $left || 'default' === $right ) {
+			return false;
+		}
+		if ( 0 === strpos( $left, $right . '_' ) || 0 === strpos( $right, $left . '_' ) ) {
+			return true;
+		}
+		if ( strlen( $left ) >= 2 && strlen( $right ) >= 2 && substr( $left, 0, 2 ) === substr( $right, 0, 2 ) ) {
+			return true;
+		}
+		return false;
 	}
 }

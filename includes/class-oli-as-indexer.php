@@ -126,6 +126,7 @@ class Oli_AS_Indexer {
 	 * @return void
 	 */
 	public function process_batch( $offset = 0 ) {
+		Oli_AS_Compat_TranslatePress::prepare_index_request();
 		$offset    = absint( $offset );
 		$batch     = max( 10, (int) Oli_AS_Settings::get( 'index_batch_size', 40 ) );
 		$items     = $this->get_source_items( $offset, $batch );
@@ -181,6 +182,7 @@ class Oli_AS_Indexer {
 	 * @return void
 	 */
 	public function index_item( $type, $id ) {
+		Oli_AS_Compat_TranslatePress::prepare_index_request();
 		$id = absint( $id );
 		$this->delete_item( $type, $id );
 
@@ -212,6 +214,7 @@ class Oli_AS_Indexer {
 			case 'tag':
 				return $this->build_term_document( $id, 'product_tag', 'tag', $lang );
 			case 'attribute':
+			case 'brand':
 				return $this->build_attribute_document( $id, $lang );
 			case 'post':
 				return $this->build_post_document( $id, 'post', $lang );
@@ -245,13 +248,7 @@ class Oli_AS_Indexer {
 			return null;
 		}
 
-		$exclude_ids = Oli_AS_Settings::parse_id_list( (string) Oli_AS_Settings::get( 'exclude_ids', '' ) );
-		if ( in_array( $id, $exclude_ids, true ) ) {
-			return null;
-		}
-
-		$exclude_cats = Oli_AS_Settings::parse_id_list( (string) Oli_AS_Settings::get( 'exclude_cat_ids', '' ) );
-		if ( ! empty( $exclude_cats ) && has_term( $exclude_cats, 'product_cat', $id ) ) {
+		if ( ! $this->passes_product_filter( $id ) ) {
 			return null;
 		}
 
@@ -259,9 +256,10 @@ class Oli_AS_Indexer {
 		$title    = $this->maybe_switch_post_content( $id, 'product', $lang, $product->get_name() );
 		$excerpt  = $this->maybe_switch_post_content( $id, 'product', $lang, $product->get_short_description() );
 		$content  = $this->maybe_switch_post_content( $id, 'product', $lang, $product->get_description() );
+		$title    = apply_filters( 'the_title', $title, $id );
 		$title    = $language->translate( $title, $lang );
-		$excerpt  = $language->translate( $excerpt, $lang );
-		$content  = $language->translate( $content, $lang );
+		$excerpt  = $language->translate_html( $excerpt, $lang );
+		$content  = $language->translate_html( $content, $lang );
 		$url      = $language->url( $product->get_permalink(), $lang );
 		$sku      = (string) $product->get_sku();
 		$fields   = array();
@@ -276,17 +274,35 @@ class Oli_AS_Indexer {
 		if ( Oli_AS_Settings::enabled( 'search_content' ) ) {
 			$fields['content'] = Oli_AS_Tokenizer::tokenize( $content );
 		}
+		$variation_skus = array();
 		if ( Oli_AS_Settings::enabled( 'search_sku' ) ) {
 			$sku_tokens = Oli_AS_Tokenizer::tokenize_sku( $sku );
 			if ( Oli_AS_Settings::enabled( 'search_variation_sku' ) && $product->is_type( 'variable' ) ) {
 				foreach ( $product->get_children() as $child_id ) {
 					$variation = wc_get_product( $child_id );
 					if ( $variation ) {
-						$sku_tokens = array_merge( $sku_tokens, Oli_AS_Tokenizer::tokenize_sku( (string) $variation->get_sku() ) );
+						$child_sku = (string) $variation->get_sku();
+						if ( '' !== $child_sku ) {
+							$variation_skus[ $child_sku ] = array(
+								'id'  => (int) $child_id,
+								'url' => $language->url( $variation->get_permalink(), $lang ),
+							);
+							$sku_tokens                   = array_merge( $sku_tokens, Oli_AS_Tokenizer::tokenize_sku( $child_sku ) );
+						}
 					}
 				}
 			}
 			$fields['sku'] = array_values( array_unique( $sku_tokens ) );
+		}
+
+		if ( Oli_AS_Settings::enabled( 'search_gtin' ) ) {
+			$gtin = $this->product_gtin( $product );
+			if ( '' !== $gtin ) {
+				$meta_tokens    = isset( $fields['meta'] ) ? $fields['meta'] : array();
+				$fields['meta'] = array_values( array_unique( array_merge( $meta_tokens, Oli_AS_Tokenizer::tokenize_sku( $gtin ) ) ) );
+				$fields['sku']  = isset( $fields['sku'] ) ? $fields['sku'] : array();
+				$fields['sku']  = array_values( array_unique( array_merge( $fields['sku'], Oli_AS_Tokenizer::tokenize_sku( $gtin ) ) ) );
+			}
 		}
 
 		if ( Oli_AS_Settings::enabled( 'search_attributes' ) ) {
@@ -298,16 +314,19 @@ class Oli_AS_Indexer {
 		}
 
 		if ( Oli_AS_Settings::enabled( 'search_custom_fields' ) ) {
-			$fields['meta'] = $this->product_meta_tokens( $id );
+			$existing       = isset( $fields['meta'] ) ? $fields['meta'] : array();
+			$fields['meta'] = array_values( array_unique( array_merge( $existing, $this->product_meta_tokens( $id ) ) ) );
 		}
 
 		$stock = $product->get_stock_status();
 		$extra = array(
-			'stock'    => $stock,
-			'type'     => $product->get_type(),
-			'sku'      => $sku,
-			'in_stock' => $product->is_in_stock() ? 1 : 0,
-			'price'    => $product->get_price(),
+			'stock'          => $stock,
+			'type'           => $product->get_type(),
+			'sku'            => $sku,
+			'in_stock'       => $product->is_in_stock() ? 1 : 0,
+			'price'          => $product->get_price(),
+			'gtin'           => $this->product_gtin( $product ),
+			'variation_skus' => $variation_skus,
 		);
 
 		return array(
@@ -410,7 +429,8 @@ class Oli_AS_Indexer {
 			return null;
 		}
 
-		$doc = $this->build_term_document( $term_id, $taxonomy, 'attribute', $lang );
+		$type = $is_brand ? 'brand' : 'attribute';
+		$doc  = $this->build_term_document( $term_id, $taxonomy, $type, $lang );
 		if ( $doc ) {
 			$doc['extra']['is_brand'] = $is_brand ? 1 : 0;
 		}
@@ -435,9 +455,9 @@ class Oli_AS_Indexer {
 		}
 
 		$language = Oli_AS_Language::instance();
-		$title    = $language->translate( $post->post_title, $lang );
-		$excerpt  = $language->translate( $post->post_excerpt, $lang );
-		$content  = $language->translate( $post->post_content, $lang );
+		$title    = $language->translate( apply_filters( 'the_title', $post->post_title, $post->ID ), $lang );
+		$excerpt  = $language->translate_html( $post->post_excerpt, $lang );
+		$content  = $language->translate_html( $post->post_content, $lang );
 		$url      = $language->url( get_permalink( $post ), $lang );
 
 		$fields = array(
@@ -680,9 +700,10 @@ class Oli_AS_Indexer {
 				)
 			);
 			if ( ! is_wp_error( $terms ) ) {
+				$type = in_array( $taxonomy, Oli_AS_Settings::brand_taxonomies(), true ) ? 'brand' : 'attribute';
 				foreach ( $terms as $id ) {
 					$items[] = array(
-						'type' => 'attribute',
+						'type' => $type,
 						'id'   => (int) $id,
 					);
 				}
@@ -1049,6 +1070,9 @@ class Oli_AS_Indexer {
 	 */
 	public function maintenance() {
 		Oli_AS_Install::maybe_upgrade();
+		if ( Oli_AS_Settings::enabled( 'scheduled_rebuild' ) ) {
+			$this->start_refresh();
+		}
 	}
 
 	/**
@@ -1066,10 +1090,70 @@ class Oli_AS_Indexer {
 		if ( 'product_tag' === $taxonomy ) {
 			return 'tag';
 		}
-		if ( 0 === strpos( $taxonomy, 'pa_' ) || in_array( $taxonomy, Oli_AS_Settings::brand_taxonomies(), true ) ) {
+		if ( in_array( $taxonomy, Oli_AS_Settings::brand_taxonomies(), true ) ) {
+			return 'brand';
+		}
+		if ( 0 === strpos( $taxonomy, 'pa_' ) ) {
 			return 'attribute';
 		}
 		return '';
+	}
+
+	/**
+	 * Product include/exclude rules.
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param int $product_id Product ID.
+	 * @return bool
+	 */
+	protected function passes_product_filter( $product_id ) {
+		$ids  = Oli_AS_Settings::parse_id_list( (string) Oli_AS_Settings::get( 'exclude_ids', '' ) );
+		$cats = Oli_AS_Settings::parse_id_list( (string) Oli_AS_Settings::get( 'exclude_cat_ids', '' ) );
+		$mode = (string) Oli_AS_Settings::get( 'filter_mode', 'exclude' );
+
+		if ( 'include' === $mode ) {
+			if ( empty( $ids ) && empty( $cats ) ) {
+				return true;
+			}
+			if ( ! empty( $ids ) && in_array( $product_id, $ids, true ) ) {
+				return true;
+			}
+			if ( ! empty( $cats ) && has_term( $cats, 'product_cat', $product_id ) ) {
+				return true;
+			}
+			return false;
+		}
+
+		if ( in_array( $product_id, $ids, true ) ) {
+			return false;
+		}
+		if ( ! empty( $cats ) && has_term( $cats, 'product_cat', $product_id ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Global unique identifier (GTIN/UPC/EAN/ISBN).
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param WC_Product $product Product.
+	 * @return string
+	 */
+	protected function product_gtin( $product ) {
+		if ( ! $product instanceof WC_Product ) {
+			return '';
+		}
+		if ( method_exists( $product, 'get_global_unique_id' ) ) {
+			$value = (string) $product->get_global_unique_id();
+			if ( '' !== $value ) {
+				return $value;
+			}
+		}
+		$value = (string) $product->get_meta( '_global_unique_id' );
+		return $value;
 	}
 
 	/**

@@ -5,9 +5,10 @@
 	--oli-as-accent: #2271b1;
 	--oli-as-hover: #f4f7fb;
 	--oli-as-price: #111111;
+	--oli-as-highlight: #fff3bf;
 	position: relative;
 	width: 100%;
-	max-width: 42rem;
+	max-width: var(--oli-as-max-width, 42rem);
 	color: var(--oli-as-text);
 	font-size: 1rem;
 	z-index: 100020;
@@ -43,6 +44,40 @@
 	color: #fff;
 	width: 2.8rem;
 	cursor: pointer;
+}
+
+.oli-as-submit.has-text {
+	width: auto;
+	padding: 0 1rem;
+	font: inherit;
+}
+
+.oli-as-preloader {
+	width: 1.1rem;
+	height: 1.1rem;
+	margin: auto 0.65rem;
+	border: 2px solid var(--oli-as-border);
+	border-top-color: var(--oli-as-accent);
+	border-radius: 50%;
+	flex: 0 0 1.1rem;
+	animation: oli-as-spin 0.65s linear infinite;
+}
+
+.oli-as-preloader[hidden] {
+	display: none;
+}
+
+@keyframes oli-as-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.oli-as-highlight {
+	background: var(--oli-as-highlight);
+	color: inherit;
+	padding: 0 0.1em;
+	border-radius: 0.15em;
 }
 
 .oli-as-icon {
@@ -239,6 +274,15 @@ body.oli-as-overlay-open {
 	overflow: hidden;
 }
 
+body.oli-as-darken::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: rgba(17, 17, 17, 0.45);
+	z-index: 100010;
+	pointer-events: none;
+}
+
 .screen-reader-text {
 	clip: rect(1px, 1px, 1px, 1px);
 	position: absolute !important;
@@ -247,8 +291,3 @@ body.oli-as-overlay-open {
 	overflow: hidden;
 }
 
-@media (max-width: 782px) {
-	.oli-as-details {
-		display: none;
-	}
-}

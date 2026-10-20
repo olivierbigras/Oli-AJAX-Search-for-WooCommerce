@@ -75,6 +75,8 @@ class Oli_AS_Assets {
 
 		$settings = Oli_AS_Settings::get_all();
 		$lang     = Oli_AS_Language::instance()->current();
+		$see_all  = trim( (string) $settings['see_all_text'] );
+		$empty    = trim( (string) $settings['no_results_text'] );
 
 		wp_localize_script(
 			'oli-as-frontend',
@@ -89,6 +91,9 @@ class Oli_AS_Assets {
 				'minChars'         => (int) $settings['min_chars'],
 				'debounce'         => (int) $settings['debounce_ms'],
 				'mobileOverlay'    => Oli_AS_Settings::enabled( 'mobile_overlay' ),
+				'mobileBreakpoint' => (int) $settings['mobile_breakpoint'],
+				'darkenBackground' => Oli_AS_Settings::enabled( 'darken_background' ),
+				'showPreloader'    => Oli_AS_Settings::enabled( 'show_preloader' ),
 				'replaceThemeForm' => Oli_AS_Settings::enabled( 'replace_theme_form' ),
 				'showDetails'      => Oli_AS_Settings::enabled( 'show_details_panel' ),
 				'showRecent'       => Oli_AS_Settings::enabled( 'show_recent' ),
@@ -97,11 +102,12 @@ class Oli_AS_Assets {
 					'products'   => __( 'Products', 'oli-ajax-search' ),
 					'categories' => __( 'Categories', 'oli-ajax-search' ),
 					'tags'       => __( 'Tags', 'oli-ajax-search' ),
-					'attributes' => __( 'Attributes & brands', 'oli-ajax-search' ),
+					'brands'     => __( 'Brands', 'oli-ajax-search' ),
+					'attributes' => __( 'Attributes', 'oli-ajax-search' ),
 					'posts'      => __( 'Posts', 'oli-ajax-search' ),
 					'pages'      => __( 'Pages', 'oli-ajax-search' ),
-					'seeAll'     => __( 'See all results', 'oli-ajax-search' ),
-					'noResults'  => __( 'No results found.', 'oli-ajax-search' ),
+					'seeAll'     => '' !== $see_all ? $see_all : __( 'See all results', 'oli-ajax-search' ),
+					'noResults'  => '' !== $empty ? $empty : __( 'No results found.', 'oli-ajax-search' ),
 					'sku'        => __( 'SKU', 'oli-ajax-search' ),
 					'inStock'    => __( 'In stock', 'oli-ajax-search' ),
 					'outOfStock' => __( 'Out of stock', 'oli-ajax-search' ),
@@ -124,14 +130,21 @@ class Oli_AS_Assets {
 			)
 		);
 
-		$css = sprintf(
-			'.oli-as-root{--oli-as-bg:%1$s;--oli-as-text:%2$s;--oli-as-border:%3$s;--oli-as-accent:%4$s;--oli-as-hover:%5$s;--oli-as-price:%6$s;}',
+		$max_width = (int) $settings['max_form_width'];
+		$css       = sprintf(
+			'.oli-as-root{--oli-as-bg:%1$s;--oli-as-text:%2$s;--oli-as-border:%3$s;--oli-as-accent:%4$s;--oli-as-hover:%5$s;--oli-as-price:%6$s;--oli-as-highlight:%7$s;%8$s}',
 			sanitize_hex_color( $settings['color_bg'] ),
 			sanitize_hex_color( $settings['color_text'] ),
 			sanitize_hex_color( $settings['color_border'] ),
 			sanitize_hex_color( $settings['color_accent'] ),
 			sanitize_hex_color( $settings['color_hover'] ),
-			sanitize_hex_color( $settings['color_price'] )
+			sanitize_hex_color( $settings['color_price'] ),
+			sanitize_hex_color( $settings['color_highlight'] ),
+			$max_width > 0 ? 'max-width:' . $max_width . 'px;' : ''
+		);
+		$css      .= sprintf(
+			'@media (max-width:%dpx){.oli-as-details{display:none;}}',
+			max( 320, (int) $settings['mobile_breakpoint'] )
 		);
 		wp_add_inline_style( 'oli-as-frontend', $css );
 	}

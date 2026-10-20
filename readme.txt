@@ -5,7 +5,7 @@ Tags: woocommerce, ajax search, live search, product search, autocomplete
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 9.0
@@ -89,10 +89,18 @@ Layout can be `classic` or `icon`.
 
 == Changelog ==
 
+= 0.1.1 =
+* Stronger TranslatePress indexing (language slugs, HTML descriptions, prefixed cron URLs, skip dynamic rewrite of suggestions).
+* Fuzzy levels, GTIN search, brands group, include/exclude filters, scheduled rebuild, and variation SKU targeting.
+* Suggestion highlight, darkened backdrop, preloader, and more appearance/text settings.
+
 = 0.1.0 =
 * Initial release: live suggestions, custom index, multilingual support, analytics, and theme form replacement.
 
 == Upgrade Notice ==
+
+= 0.1.1 =
+Rebuild the index after updating so GTIN, brands, and TranslatePress rows pick up the new fields.
 
 = 0.1.0 =
 Initial public version.

@@ -134,12 +134,14 @@ class Oli_AS_Index_Engine {
 			'types'         => array(),
 			'limit'         => 10,
 			'fuzzy'         => true,
+			'fuzzy_level'   => '',
 			'stopwords'     => array(),
 			'synonyms'      => array(),
 			'weights'       => array(),
 			'excluded_keys' => array(),
 		);
 		$options  = array_merge( $defaults, $options );
+		$level    = $this->resolve_fuzzy_level( $options );
 		$tokens   = Oli_AS_Tokenizer::tokenize( $query );
 		$tokens   = Oli_AS_Tokenizer::remove_stopwords( $tokens, $options['stopwords'] );
 		$tokens   = Oli_AS_Synonyms::expand( $tokens, $options['synonyms'] );
@@ -153,7 +155,7 @@ class Oli_AS_Index_Engine {
 		$kinds  = array();
 
 		foreach ( $tokens as $token ) {
-			$matches = $this->lookup_term( $lang, $token, (bool) $options['fuzzy'] );
+			$matches = $this->lookup_term( $lang, $token, $level );
 			foreach ( $matches as $row ) {
 				$key = $row['key'];
 				if ( isset( $options['excluded_keys'][ $key ] ) ) {
@@ -214,11 +216,12 @@ class Oli_AS_Index_Engine {
 	 *
 	 * @param string $lang  Language.
 	 * @param string $token Token.
-	 * @param bool   $fuzzy Whether to include fuzzy matches.
+	 * @param string $level Fuzzy level (off disables fuzzy matches).
 	 * @return array<int, array<string, mixed>>
 	 */
-	protected function lookup_term( $lang, $token, $fuzzy ) {
+	protected function lookup_term( $lang, $token, $level ) {
 		$found = array();
+		$fuzzy = ( 'off' !== $level );
 
 		if ( isset( $this->inv[ $lang ][ $token ] ) ) {
 			foreach ( $this->inv[ $lang ][ $token ] as $key => $fields ) {
@@ -242,7 +245,7 @@ class Oli_AS_Index_Engine {
 			$kind = '';
 			if ( 0 === strpos( $term, $token ) ) {
 				$kind = 'prefix';
-			} elseif ( $fuzzy && Oli_AS_Relevance::is_fuzzy_match( $token, $term ) ) {
+			} elseif ( $fuzzy && Oli_AS_Relevance::is_fuzzy_match( $token, $term, $level ) ) {
 				$kind = 'fuzzy';
 			}
 
@@ -283,5 +286,26 @@ class Oli_AS_Index_Engine {
 	 */
 	public function count() {
 		return count( $this->docs );
+	}
+
+	/**
+	 * Resolves a fuzzy level from search options.
+	 *
+	 * @since 0.1.1
+	 *
+	 * @param array<string, mixed> $options Search options.
+	 * @return string
+	 */
+	protected function resolve_fuzzy_level( $options ) {
+		if ( isset( $options['fuzzy'] ) && ( false === $options['fuzzy'] || '0' === (string) $options['fuzzy'] || 'off' === $options['fuzzy'] ) ) {
+			return 'off';
+		}
+
+		$level = isset( $options['fuzzy_level'] ) ? (string) $options['fuzzy_level'] : '';
+		if ( in_array( $level, array( 'off', 'soft', 'normal', 'hard' ), true ) ) {
+			return $level;
+		}
+
+		return ! empty( $options['fuzzy'] ) ? 'normal' : 'off';
 	}
 }

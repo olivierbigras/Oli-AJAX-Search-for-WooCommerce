@@ -38,6 +38,21 @@ class RelevanceTest extends TestCase {
 		$this->assertFalse( Oli_AS_Relevance::is_fuzzy_match( 'hat', 'hot' ) );
 	}
 
+	public function test_fuzzy_level_off_rejects_typos() {
+		$this->assertFalse( Oli_AS_Relevance::is_fuzzy_match( 'hoodie', 'hoodee', 'off' ) );
+		$this->assertFalse( Oli_AS_Relevance::is_fuzzy_match( 'hoodie', 'hoodee', false ) );
+	}
+
+	public function test_fuzzy_level_soft_needs_longer_tokens() {
+		$this->assertFalse( Oli_AS_Relevance::is_fuzzy_match( 'coat', 'coet', 'soft' ) );
+		$this->assertTrue( Oli_AS_Relevance::is_fuzzy_match( 'hoodie', 'hoodee', 'soft' ) );
+	}
+
+	public function test_fuzzy_level_hard_allows_short_tokens() {
+		$this->assertTrue( Oli_AS_Relevance::is_fuzzy_match( 'hat', 'hot', 'hard' ) );
+		$this->assertTrue( Oli_AS_Relevance::is_fuzzy_match( 'hoodie', 'hoodee', 'hard' ) );
+	}
+
 	public function test_all_tokens_coverage_bonus() {
 		$partial = Oli_AS_Relevance::score(
 			array( 'blue', 'shirt' ),

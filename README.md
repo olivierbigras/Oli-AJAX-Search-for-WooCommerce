@@ -13,7 +13,7 @@ WordPress plugin that adds a fast live AJAX search bar to WooCommerce stores.
 
 Live suggestions (products with image, price, SKU, stock, excerpt; categories; tags; attributes/brands; posts; pages), a custom inverted index, fuzzy matching, synonyms, stopwords, exclusions, relevance weights, shortcode/widget/block/menu item, theme form replacement, hover details panel, local analytics, TranslatePress (plus WPML/Polylang), and WooCommerce price filters for multicurrency.
 
-See `readme.txt` for the WordPress.org description and `CHANGELOG.md` for release notes.
+See `readme.txt` for the WordPress.org description, `CHANGELOG.md` for release notes, and `FEATURE-GAP.md` for the checklist versus FiboSearch Pro 1.34.3 (behavioral reference only).
 
 ## Development
 

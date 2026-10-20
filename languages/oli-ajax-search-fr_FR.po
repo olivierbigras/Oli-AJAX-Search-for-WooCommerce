@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Oli AJAX Search for WooCommerce 0.1.0\n"
+"Project-Id-Version: Oli AJAX Search for WooCommerce 0.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/olivierbigras/Oli-AJAX-Search-for-WooCommerce\n"
 "POT-Creation-Date: 2026-10-20 00:00+0000\n"
 "PO-Revision-Date: 2026-10-20 00:00+0000\n"
@@ -285,8 +285,8 @@ msgstr "État :"
 msgid "Rebuild index"
 msgstr "Reconstruire l’index"
 
-msgid "The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally."
-msgstr "L’index est construit par lots en arrière-plan avec Action Scheduler lorsque WooCommerce le fournit, sinon WP-Cron. Les enregistrements de produits et les changements de stock mettent à jour l’index de façon incrémentielle."
+msgid "The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally. Daily rebuild can be enabled on the Search tab."
+msgstr "L’index est construit par lots en arrière-plan avec Action Scheduler lorsque WooCommerce le fournit, sinon WP-Cron. Les enregistrements de produits et les changements de stock mettent à jour l’index de façon incrémentielle. La reconstruction quotidienne s’active dans l’onglet Recherche."
 
 msgid "TranslatePress is active. Product titles and descriptions are indexed per published language and searched in the current language."
 msgstr "TranslatePress est actif. Les titres et descriptions de produits sont indexés par langue publiée et la recherche se fait dans la langue courante."
@@ -329,3 +329,81 @@ msgstr "Formulaire de recherche"
 
 msgid "Oli AJAX Search form"
 msgstr "Formulaire Oli AJAX Search"
+
+msgid "Brands"
+msgstr "Marques"
+
+msgid "Mobile breakpoint (px)"
+msgstr "Seuil mobile (px)"
+
+msgid "Maximum form width (px)"
+msgstr "Largeur maximale du formulaire (px)"
+
+msgid "Use 0 for the default width."
+msgstr "Utilisez 0 pour la largeur par défaut."
+
+msgid "Submit button text"
+msgstr "Texte du bouton d’envoi"
+
+msgid "Leave empty to show a search icon only."
+msgstr "Laissez vide pour n’afficher qu’une icône de recherche."
+
+msgid "No results text"
+msgstr "Texte « aucun résultat »"
+
+msgid "See all results text"
+msgstr "Texte « voir tous les résultats »"
+
+msgid "Darken the page behind suggestions"
+msgstr "Assombrir la page derrière les suggestions"
+
+msgid "Show a submit button"
+msgstr "Afficher un bouton d’envoi"
+
+msgid "Show a loading indicator while fetching suggestions"
+msgstr "Afficher un indicateur de chargement pendant la recherche"
+
+msgid "Search GTIN / UPC / EAN / ISBN"
+msgstr "Rechercher le GTIN / UPC / EAN / ISBN"
+
+msgid "Rebuild the index daily during maintenance"
+msgstr "Reconstruire l’index chaque jour lors de la maintenance"
+
+msgid "Typo tolerance"
+msgstr "Tolérance aux fautes"
+
+msgid "Off"
+msgstr "Désactivée"
+
+msgid "Soft"
+msgstr "Légère"
+
+msgid "Normal"
+msgstr "Normale"
+
+msgid "Hard"
+msgstr "Forte"
+
+msgid "Soft needs longer words and one typo. Hard allows shorter words and more typos."
+msgstr "Le mode léger exige des mots plus longs et une seule faute. Le mode fort accepte des mots plus courts et davantage de fautes."
+
+msgid "Product filter mode"
+msgstr "Mode de filtre des produits"
+
+msgid "Exclude the IDs below"
+msgstr "Exclure les ID ci-dessous"
+
+msgid "Include only the IDs below"
+msgstr "Inclure uniquement les ID ci-dessous"
+
+msgid "Product IDs"
+msgstr "ID de produits"
+
+msgid "Comma-separated. Used as include or exclude depending on the filter mode."
+msgstr "Séparés par des virgules. Inclus ou exclus selon le mode de filtre."
+
+msgid "Category IDs"
+msgstr "ID de catégories"
+
+msgid "Matched text highlight"
+msgstr "Surlignage du texte correspondant"

@@ -222,17 +222,35 @@ class Oli_AS_Relevance {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param string $token     Query token.
-	 * @param string $candidate Index token.
+	 * @param string          $token     Query token.
+	 * @param string          $candidate Index token.
+	 * @param string|bool|int $level     off|soft|normal|hard, or a legacy boolean.
 	 * @return bool
 	 */
-	public static function is_fuzzy_match( $token, $candidate ) {
-		$len = mb_strlen( $token, 'UTF-8' );
-		if ( $len < 4 ) {
+	public static function is_fuzzy_match( $token, $candidate, $level = 'normal' ) {
+		if ( 'off' === $level || false === $level || '0' === (string) $level ) {
 			return false;
 		}
 
-		$max = ( $len >= 8 ) ? 2 : 1;
+		$len = mb_strlen( $token, 'UTF-8' );
+		$min = 4;
+		$max = 1;
+
+		if ( 'soft' === $level ) {
+			$min = 5;
+			$max = 1;
+		} elseif ( 'hard' === $level ) {
+			$min = 3;
+			$max = ( $len >= 10 ) ? 3 : ( ( $len >= 6 ) ? 2 : 1 );
+		} else {
+			$min = 4;
+			$max = ( $len >= 8 ) ? 2 : 1;
+		}
+
+		if ( $len < $min ) {
+			return false;
+		}
+
 		return self::distance( $token, $candidate, $max ) <= $max;
 	}
 }

@@ -115,6 +115,29 @@ class IndexEngineTest extends TestCase {
 		$this->assertSame( 1, $results[0]['id'] );
 	}
 
+	public function test_fuzzy_level_off_skips_typos() {
+		$results = $this->catalog()->search(
+			'hoodee',
+			array(
+				'language'    => 'en',
+				'fuzzy_level' => 'off',
+			)
+		);
+		$this->assertSame( array(), $results );
+	}
+
+	public function test_fuzzy_level_soft_still_matches_hoodie() {
+		$results = $this->catalog()->search(
+			'hoodee',
+			array(
+				'language'    => 'en',
+				'fuzzy_level' => 'soft',
+			)
+		);
+		$this->assertNotEmpty( $results );
+		$this->assertSame( 1, $results[0]['id'] );
+	}
+
 	public function test_synonym_expansion() {
 		$results = $this->catalog()->search(
 			'sweatshirt',

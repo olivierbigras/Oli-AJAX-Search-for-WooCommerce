@@ -70,6 +70,8 @@ class Oli_AS_Shortcode {
 		$lang        = Oli_AS_Language::instance()->current();
 		$action      = Oli_AS_Language::instance()->url( home_url( '/' ), $lang );
 		$uid         = wp_unique_id( 'oli-as-' );
+		$show_submit = Oli_AS_Settings::enabled( 'show_submit' );
+		$submit_text = trim( (string) Oli_AS_Settings::get( 'submit_text', '' ) );
 
 		ob_start();
 		?>
@@ -96,10 +98,19 @@ class Oli_AS_Shortcode {
 				/>
 				<input type="hidden" name="post_type" value="product" />
 				<input type="hidden" name="oli_as" value="1" />
-				<button type="submit" class="oli-as-submit">
-					<span class="screen-reader-text"><?php esc_html_e( 'Search', 'oli-ajax-search' ); ?></span>
-					<span class="oli-as-icon" aria-hidden="true"></span>
-				</button>
+				<?php if ( Oli_AS_Settings::enabled( 'show_preloader' ) ) : ?>
+					<span class="oli-as-preloader" hidden></span>
+				<?php endif; ?>
+				<?php if ( $show_submit ) : ?>
+					<button type="submit" class="oli-as-submit<?php echo '' !== $submit_text ? ' has-text' : ''; ?>">
+						<?php if ( '' !== $submit_text ) : ?>
+							<?php echo esc_html( $submit_text ); ?>
+						<?php else : ?>
+							<span class="screen-reader-text"><?php esc_html_e( 'Search', 'oli-ajax-search' ); ?></span>
+							<span class="oli-as-icon" aria-hidden="true"></span>
+						<?php endif; ?>
+					</button>
+				<?php endif; ?>
 			</form>
 			<div class="oli-as-panel" hidden>
 				<div class="oli-as-suggestions" role="listbox"></div>

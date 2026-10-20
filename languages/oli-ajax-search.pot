@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Oli AJAX Search for WooCommerce 0.1.0\n"
+"Project-Id-Version: Oli AJAX Search for WooCommerce 0.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/olivierbigras/Oli-AJAX-Search-for-WooCommerce\n"
 "POT-Creation-Date: 2026-10-20 00:00+0000\n"
 "MIME-Version: 1.0\n"
@@ -286,7 +286,7 @@ msgstr ""
 msgid "Rebuild index"
 msgstr ""
 
-msgid "The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally."
+msgid "The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally. Daily rebuild can be enabled on the Search tab."
 msgstr ""
 
 msgid "TranslatePress is active. Product titles and descriptions are indexed per published language and searched in the current language."
@@ -329,4 +329,82 @@ msgid "Search form"
 msgstr ""
 
 msgid "Oli AJAX Search form"
+msgstr ""
+
+msgid "Brands"
+msgstr ""
+
+msgid "Mobile breakpoint (px)"
+msgstr ""
+
+msgid "Maximum form width (px)"
+msgstr ""
+
+msgid "Use 0 for the default width."
+msgstr ""
+
+msgid "Submit button text"
+msgstr ""
+
+msgid "Leave empty to show a search icon only."
+msgstr ""
+
+msgid "No results text"
+msgstr ""
+
+msgid "See all results text"
+msgstr ""
+
+msgid "Darken the page behind suggestions"
+msgstr ""
+
+msgid "Show a submit button"
+msgstr ""
+
+msgid "Show a loading indicator while fetching suggestions"
+msgstr ""
+
+msgid "Search GTIN / UPC / EAN / ISBN"
+msgstr ""
+
+msgid "Rebuild the index daily during maintenance"
+msgstr ""
+
+msgid "Typo tolerance"
+msgstr ""
+
+msgid "Off"
+msgstr ""
+
+msgid "Soft"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "Soft needs longer words and one typo. Hard allows shorter words and more typos."
+msgstr ""
+
+msgid "Product filter mode"
+msgstr ""
+
+msgid "Exclude the IDs below"
+msgstr ""
+
+msgid "Include only the IDs below"
+msgstr ""
+
+msgid "Product IDs"
+msgstr ""
+
+msgid "Comma-separated. Used as include or exclude depending on the filter mode."
+msgstr ""
+
+msgid "Category IDs"
+msgstr ""
+
+msgid "Matched text highlight"
 msgstr ""
