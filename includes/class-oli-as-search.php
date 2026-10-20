@@ -152,23 +152,26 @@ class Oli_AS_Search {
 
 		$limit = max( 1, min( 200, (int) $limit ) );
 
-		$sql = "SELECT d.object_key, d.object_id, d.object_type, d.language, d.title, d.sku, d.excerpt, d.url, d.image_id, d.parent_id, d.extra,
-			SUM(i.weight * CASE
-				WHEN i.term = i_term.qterm THEN 3
-				WHEN i.term LIKE CONCAT(i_term.qterm, '%') THEN 1.6
-				ELSE 0.55
-			END) AS score,
-			COUNT(DISTINCT i_term.qterm) AS coverage
-			FROM {$inv} i
-			INNER JOIN {$docs} d ON d.object_key = i.object_key
-			INNER JOIN (
-				{$this->term_union_sql( $term_set )}
-			) i_term ON i.term = i_term.iterm
-			WHERE i.language = %s
-			AND i.term IN ({$placeholders})
-			{$type_sql}
-			GROUP BY d.object_key
-			ORDER BY (coverage * 15) + score DESC
+		$sql = "SELECT ranked.object_key, ranked.object_id, ranked.object_type, ranked.language, ranked.title, ranked.sku, ranked.excerpt, ranked.url, ranked.image_id, ranked.parent_id, ranked.extra, ranked.score, ranked.coverage
+			FROM (
+				SELECT d.object_key, d.object_id, d.object_type, d.language, d.title, d.sku, d.excerpt, d.url, d.image_id, d.parent_id, d.extra,
+					SUM(i.weight * CASE
+						WHEN i.term = i_term.qterm THEN 3
+						WHEN i.term LIKE CONCAT(i_term.qterm, '%') THEN 1.6
+						ELSE 0.55
+					END) AS score,
+					COUNT(DISTINCT i_term.qterm) AS coverage
+				FROM {$inv} i
+				INNER JOIN {$docs} d ON d.object_key = i.object_key
+				INNER JOIN (
+					{$this->term_union_sql( $term_set )}
+				) i_term ON i.term = i_term.iterm
+				WHERE i.language = %s
+				AND i.term IN ({$placeholders})
+				{$type_sql}
+				GROUP BY d.object_key, d.object_id, d.object_type, d.language, d.title, d.sku, d.excerpt, d.url, d.image_id, d.parent_id, d.extra
+			) ranked
+			ORDER BY (ranked.coverage * 15) + ranked.score DESC
 			LIMIT {$limit}";
 
 		$prepare_params = array_merge( $this->term_union_params( $term_set ), $params );
