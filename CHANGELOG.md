@@ -9,7 +9,7 @@
 - Frontend CSS/JS load only when a form is rendered or theme replacement is enabled.
 - Query cache, CSV analytics export, scheduler interval + start time, sale/featured badges, Elementor widget, navigation block, qTranslate-XT.
 - Complete Canadian French (`fr_CA`) translations: `.po`, `.mo`, and `.l10n.php`.
-- CI: PHP 7.4–8.4, PHPCS, PHPUnit, Plugin Check, ZIP artifact with MD5.
+- CI: PHP 7.4–8.4, PHPCS, PHPUnit, Plugin Check (slug `oli-ajax-search`, 0 errors), ZIP artifact with MD5.
 
 ## 0.1.1
 

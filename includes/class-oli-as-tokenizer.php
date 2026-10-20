@@ -5,9 +5,7 @@
  * @package Oli_Ajax_Search
  */
 
-if ( ! defined( 'ABSPATH' ) && ! defined( 'OLI_AS_TEST_BOOTSTRAP' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Normalizes text and splits it into searchable tokens.

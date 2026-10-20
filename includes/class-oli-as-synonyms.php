@@ -5,9 +5,7 @@
  * @package Oli_Ajax_Search
  */
 
-if ( ! defined( 'ABSPATH' ) && ! defined( 'OLI_AS_TEST_BOOTSTRAP' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Expands query tokens using configured synonym groups.
