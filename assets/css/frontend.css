@@ -1,0 +1,254 @@
+.oli-as-root {
+	--oli-as-bg: #ffffff;
+	--oli-as-text: #111111;
+	--oli-as-border: #d0d0d0;
+	--oli-as-accent: #2271b1;
+	--oli-as-hover: #f4f7fb;
+	--oli-as-price: #111111;
+	position: relative;
+	width: 100%;
+	max-width: 42rem;
+	color: var(--oli-as-text);
+	font-size: 1rem;
+	z-index: 100020;
+}
+
+.oli-as-form {
+	display: flex;
+	align-items: stretch;
+	background: var(--oli-as-bg);
+	border: 1px solid var(--oli-as-border);
+	border-radius: 999px;
+	overflow: hidden;
+}
+
+.oli-as-input {
+	flex: 1 1 auto;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	padding: 0.7rem 1rem;
+	min-width: 0;
+	font: inherit;
+}
+
+.oli-as-input:focus {
+	outline: none;
+}
+
+.oli-as-submit,
+.oli-as-icon-toggle {
+	border: 0;
+	background: var(--oli-as-accent);
+	color: #fff;
+	width: 2.8rem;
+	cursor: pointer;
+}
+
+.oli-as-icon {
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid currentColor;
+	border-radius: 50%;
+	position: relative;
+}
+
+.oli-as-icon::after {
+	content: "";
+	position: absolute;
+	width: 0.45rem;
+	height: 2px;
+	background: currentColor;
+	right: -0.35rem;
+	bottom: -0.1rem;
+	transform: rotate(45deg);
+}
+
+.oli-as-panel {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(100% + 0.4rem);
+	display: flex;
+	background: var(--oli-as-bg);
+	border: 1px solid var(--oli-as-border);
+	border-radius: 0.75rem;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+	overflow: hidden;
+}
+
+.oli-as-panel[hidden] {
+	display: none;
+}
+
+.oli-as-suggestions {
+	flex: 1 1 auto;
+	max-height: 28rem;
+	overflow: auto;
+	min-width: 0;
+}
+
+.oli-as-details {
+	flex: 0 0 16rem;
+	border-left: 1px solid var(--oli-as-border);
+	padding: 1rem;
+	background: var(--oli-as-hover);
+}
+
+.oli-as-details[hidden] {
+	display: none;
+}
+
+.oli-as-group-title {
+	margin: 0;
+	padding: 0.6rem 1rem 0.2rem;
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	opacity: 0.7;
+}
+
+.oli-as-item {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.65rem 1rem;
+	text-decoration: none;
+	color: inherit;
+}
+
+.oli-as-item:hover,
+.oli-as-item.is-active {
+	background: var(--oli-as-hover);
+}
+
+.oli-as-item img {
+	width: 48px;
+	height: 48px;
+	object-fit: cover;
+	border-radius: 0.4rem;
+	flex: 0 0 48px;
+}
+
+.oli-as-item-body {
+	min-width: 0;
+}
+
+.oli-as-item-title {
+	display: block;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.oli-as-item-meta {
+	display: block;
+	font-size: 0.85rem;
+	opacity: 0.8;
+}
+
+.oli-as-item-price {
+	color: var(--oli-as-price);
+	font-weight: 600;
+}
+
+.oli-as-see-all,
+.oli-as-empty {
+	display: block;
+	padding: 0.85rem 1rem;
+}
+
+.oli-as-see-all {
+	font-weight: 600;
+	color: var(--oli-as-accent);
+	text-decoration: none;
+}
+
+.oli-as-layout-icon .oli-as-form {
+	display: none;
+}
+
+.oli-as-layout-icon.is-open .oli-as-form {
+	display: flex;
+}
+
+.oli-as-icon-toggle {
+	border-radius: 999px;
+}
+
+.oli-as-overlay {
+	position: fixed;
+	inset: 0;
+	background: var(--oli-as-bg);
+	z-index: 100050;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.oli-as-overlay-bar {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.oli-as-overlay .oli-as-root {
+	max-width: none;
+	flex: 1 1 auto;
+}
+
+.oli-as-overlay .oli-as-panel {
+	position: static;
+	flex: 1 1 auto;
+	max-height: none;
+	box-shadow: none;
+}
+
+.oli-as-close {
+	border: 1px solid var(--oli-as-border);
+	background: transparent;
+	border-radius: 999px;
+	padding: 0.5rem 0.8rem;
+	cursor: pointer;
+}
+
+.oli-as-details img {
+	width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.oli-as-details-title {
+	margin: 0 0 0.4rem;
+	font-size: 1.05rem;
+}
+
+.oli-as-add-to-cart {
+	display: inline-block;
+	margin-top: 0.75rem;
+	background: var(--oli-as-accent);
+	color: #fff;
+	text-decoration: none;
+	padding: 0.5rem 0.85rem;
+	border-radius: 999px;
+}
+
+body.oli-as-overlay-open {
+	overflow: hidden;
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+@media (max-width: 782px) {
+	.oli-as-details {
+		display: none;
+	}
+}

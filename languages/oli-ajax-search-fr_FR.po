@@ -1,0 +1,331 @@
+# Copyright (C) 2026 Olivier Bigras
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Oli AJAX Search for WooCommerce 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/olivierbigras/Oli-AJAX-Search-for-WooCommerce\n"
+"POT-Creation-Date: 2026-10-20 00:00+0000\n"
+"PO-Revision-Date: 2026-10-20 00:00+0000\n"
+"Last-Translator: Olivier Bigras <oli@olivierbigras.com>\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: oli-ajax-search\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Oli AJAX Search for WooCommerce requires WooCommerce to be installed and active."
+msgstr "Oli AJAX Search for WooCommerce nécessite que WooCommerce soit installé et actif."
+
+msgid "Search products…"
+msgstr "Rechercher des produits…"
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "Indexing started."
+msgstr "Indexation commencée."
+
+msgid "Index is up to date."
+msgstr "L’index est à jour."
+
+msgid "Indexed %1$d of %2$d items."
+msgstr "%1$d éléments indexés sur %2$d."
+
+msgid "You are not allowed to rebuild the index."
+msgstr "Vous n’êtes pas autorisé à reconstruire l’index."
+
+msgid "You are not allowed to view the index."
+msgstr "Vous n’êtes pas autorisé à voir l’index."
+
+msgid "You are not allowed to clear analytics."
+msgstr "Vous n’êtes pas autorisé à vider les statistiques."
+
+msgid "Analytics cleared."
+msgstr "Statistiques vidées."
+
+msgid "Products"
+msgstr "Produits"
+
+msgid "Categories"
+msgstr "Catégories"
+
+msgid "Tags"
+msgstr "Étiquettes"
+
+msgid "Attributes & brands"
+msgstr "Attributs et marques"
+
+msgid "Posts"
+msgstr "Articles"
+
+msgid "Pages"
+msgstr "Pages"
+
+msgid "See all results"
+msgstr "Voir tous les résultats"
+
+msgid "No results found."
+msgstr "Aucun résultat."
+
+msgid "SKU"
+msgstr "UGS"
+
+msgid "In stock"
+msgstr "En stock"
+
+msgid "Out of stock"
+msgstr "Rupture de stock"
+
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+msgid "Recent searches"
+msgstr "Recherches récentes"
+
+msgid "Close search"
+msgstr "Fermer la recherche"
+
+msgid "Search"
+msgstr "Recherche"
+
+msgid "Open search"
+msgstr "Ouvrir la recherche"
+
+msgid "Oli AJAX Search"
+msgstr "Oli AJAX Search"
+
+msgid "Live AJAX product search bar."
+msgstr "Barre de recherche AJAX de produits."
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Layout"
+msgstr "Mise en page"
+
+msgid "Classic bar"
+msgstr "Barre classique"
+
+msgid "Icon that expands"
+msgstr "Icône qui s’étend"
+
+msgid "Placeholder"
+msgstr "Texte indicatif"
+
+msgid "Add a live search field to this menu."
+msgstr "Ajouter un champ de recherche instantanée à ce menu."
+
+msgid "Add to Menu"
+msgstr "Ajouter au menu"
+
+msgid "You do not have permission to access this page."
+msgstr "Vous n’avez pas l’autorisation d’accéder à cette page."
+
+msgid "General"
+msgstr "Général"
+
+msgid "Appearance"
+msgstr "Apparence"
+
+msgid "Index"
+msgstr "Index"
+
+msgid "Analytics"
+msgstr "Statistiques"
+
+msgid "Minimum characters"
+msgstr "Caractères minimum"
+
+msgid "Debounce (ms)"
+msgstr "Délai (ms)"
+
+msgid "Maximum results per group"
+msgstr "Résultats maximum par groupe"
+
+msgid "Attributes / brands"
+msgstr "Attributs / marques"
+
+msgid "Use a full-screen overlay on mobile"
+msgstr "Utiliser un overlay plein écran sur mobile"
+
+msgid "Replace theme and WooCommerce search forms"
+msgstr "Remplacer les formulaires de recherche du thème et de WooCommerce"
+
+msgid "Show product image"
+msgstr "Afficher l’image du produit"
+
+msgid "Show price"
+msgstr "Afficher le prix"
+
+msgid "Show SKU"
+msgstr "Afficher l’UGS"
+
+msgid "Show stock status"
+msgstr "Afficher le stock"
+
+msgid "Show short description"
+msgstr "Afficher la description courte"
+
+msgid "Show details panel on hover"
+msgstr "Afficher le panneau de détails au survol"
+
+msgid "Show add to cart in the details panel"
+msgstr "Afficher « Ajouter au panier » dans le panneau de détails"
+
+msgid "Show recent searches"
+msgstr "Afficher les recherches récentes"
+
+msgid "Use the same relevance on the WooCommerce results page"
+msgstr "Utiliser la même pertinence sur la page de résultats WooCommerce"
+
+msgid "Search titles"
+msgstr "Rechercher dans les titres"
+
+msgid "Search content"
+msgstr "Rechercher dans le contenu"
+
+msgid "Search excerpts"
+msgstr "Rechercher dans les extraits"
+
+msgid "Search SKUs"
+msgstr "Rechercher dans les UGS"
+
+msgid "Include variation SKUs"
+msgstr "Inclure les UGS des variations"
+
+msgid "Search attributes"
+msgstr "Rechercher dans les attributs"
+
+msgid "Search taxonomies"
+msgstr "Rechercher dans les taxonomies"
+
+msgid "Search custom fields"
+msgstr "Rechercher dans les champs personnalisés"
+
+msgid "Fuzzy matching / typo tolerance"
+msgstr "Correspondance floue / tolérance aux fautes"
+
+msgid "Hide out-of-stock products"
+msgstr "Masquer les produits en rupture"
+
+msgid "Index posts"
+msgstr "Indexer les articles"
+
+msgid "Index pages"
+msgstr "Indexer les pages"
+
+msgid "Custom field keys"
+msgstr "Clés de champs personnalisés"
+
+msgid "One meta key per line, or comma-separated."
+msgstr "Une clé de métadonnée par ligne, ou séparées par des virgules."
+
+msgid "Synonyms"
+msgstr "Synonymes"
+
+msgid "One group per line, comma-separated. Example: hoodie, sweatshirt, hoody"
+msgstr "Un groupe par ligne, séparé par des virgules. Exemple : hoodie, sweatshirt, hoody"
+
+msgid "Stopwords"
+msgstr "Mots vides"
+
+msgid "Excluded product IDs"
+msgstr "ID de produits exclus"
+
+msgid "Excluded category IDs"
+msgstr "ID de catégories exclues"
+
+msgid "Relevance weights"
+msgstr "Poids de pertinence"
+
+msgid "Excerpt"
+msgstr "Extrait"
+
+msgid "Content"
+msgstr "Contenu"
+
+msgid "Attributes"
+msgstr "Attributs"
+
+msgid "Custom fields"
+msgstr "Champs personnalisés"
+
+msgid "Taxonomies"
+msgstr "Taxonomies"
+
+msgid "Brand taxonomies"
+msgstr "Taxonomies de marques"
+
+msgid "Background"
+msgstr "Arrière-plan"
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "Border"
+msgstr "Bordure"
+
+msgid "Accent"
+msgstr "Accent"
+
+msgid "Suggestion hover"
+msgstr "Survol des suggestions"
+
+msgid "Price"
+msgstr "Prix"
+
+msgid "Indexed documents: %1$d. Languages: %2$s."
+msgstr "Documents indexés : %1$d. Langues : %2$s."
+
+msgid "Status:"
+msgstr "État :"
+
+msgid "Rebuild index"
+msgstr "Reconstruire l’index"
+
+msgid "The index is built in background batches with Action Scheduler when WooCommerce provides it, otherwise WP-Cron. Product saves and stock changes update the index incrementally."
+msgstr "L’index est construit par lots en arrière-plan avec Action Scheduler lorsque WooCommerce le fournit, sinon WP-Cron. Les enregistrements de produits et les changements de stock mettent à jour l’index de façon incrémentielle."
+
+msgid "TranslatePress is active. Product titles and descriptions are indexed per published language and searched in the current language."
+msgstr "TranslatePress est actif. Les titres et descriptions de produits sont indexés par langue publiée et la recherche se fait dans la langue courante."
+
+msgid "Queries are stored on this site only. Nothing is sent to remote services."
+msgstr "Les requêtes sont stockées uniquement sur ce site. Rien n’est envoyé à des services distants."
+
+msgid "Clear analytics"
+msgstr "Vider les statistiques"
+
+msgid "Top queries"
+msgstr "Requêtes les plus fréquentes"
+
+msgid "Queries with no results"
+msgstr "Requêtes sans résultat"
+
+msgid "Query"
+msgstr "Requête"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Hits"
+msgstr "Occurrences"
+
+msgid "Last results"
+msgstr "Derniers résultats"
+
+msgid "Last hit"
+msgstr "Dernière occurrence"
+
+msgid "No data yet."
+msgstr "Aucune donnée pour le moment."
+
+msgid "Refreshing translations in the index."
+msgstr "Actualisation des traductions dans l’index."
+
+msgid "Search form"
+msgstr "Formulaire de recherche"
+
+msgid "Oli AJAX Search form"
+msgstr "Formulaire Oli AJAX Search"

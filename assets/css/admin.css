@@ -1,0 +1,14 @@
+.oli-as-admin progress {
+	width: 20rem;
+	height: 0.9rem;
+	vertical-align: middle;
+}
+
+.oli-as-index-panel {
+	max-width: 52rem;
+	margin-top: 1.5rem;
+}
+
+.oli-as-admin .form-table input[type="number"] {
+	width: 6rem;
+}
