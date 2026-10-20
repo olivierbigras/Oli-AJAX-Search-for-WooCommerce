@@ -1,0 +1,34 @@
+{
+	"name": "olivierbigras/oli-ajax-search",
+	"description": "Oli AJAX Search for WooCommerce",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://github.com/olivierbigras/Oli-AJAX-Search-for-WooCommerce",
+	"authors": [
+		{
+			"name": "Olivier Bigras",
+			"homepage": "https://olivierbigras.com/"
+		}
+	],
+	"require": {
+		"php": ">=7.4"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.6",
+		"wp-coding-standards/wpcs": "^3.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"platform": {
+			"php": "7.4.33"
+		}
+	},
+	"scripts": {
+		"test": "phpunit --colors=always",
+		"phpcs": "phpcs --standard=phpcs.xml.dist",
+		"lint": "find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l"
+	}
+}

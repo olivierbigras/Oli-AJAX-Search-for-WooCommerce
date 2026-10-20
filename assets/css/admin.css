@@ -1,0 +1,24 @@
+.oli-as-admin .oli-as-advanced-toggle {
+	margin: 0.5rem 0 1rem;
+}
+
+.oli-as-admin:not(.is-advanced) .oli-as-advanced {
+	display: none;
+}
+
+.oli-as-admin .oli-as-preview {
+	max-width: 40rem;
+	margin: 1rem 0;
+	padding: 1rem;
+	background: #fff;
+	border: 1px solid #dcdcde;
+}
+
+.oli-as-admin .oli-as-index-panel progress {
+	width: 20rem;
+	margin-right: 0.5rem;
+}
+
+.oli-as-admin .form-table td p.description {
+	max-width: 40rem;
+}

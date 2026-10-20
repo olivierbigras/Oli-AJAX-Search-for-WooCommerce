@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "oli-ajax-search/search-nav",
+	"title": "Oli AJAX Search navigation item",
+	"category": "design",
+	"icon": "search",
+	"description": "Search bar for the navigation block.",
+	"textdomain": "oli-ajax-search",
+	"parent": [ "core/navigation" ],
+	"attributes": {
+		"layout": {
+			"type": "string",
+			"default": "icon"
+		}
+	},
+	"supports": {
+		"html": false
+	}
+}
