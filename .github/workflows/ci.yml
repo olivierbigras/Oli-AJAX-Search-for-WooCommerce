@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  qa:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer
+
+      - name: PHP syntax check
+        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: PHPCS WordPress
+        run: vendor/bin/phpcs --standard=phpcs.xml.dist
+
+      - name: Unit tests
+        run: vendor/bin/phpunit --colors=always
+
+  plugin-check:
+    name: Plugin Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          slug: oli-ajax-search
+          exclude-directories: tests,vendor,bin,.github
+          exclude-files: phpcs.xml.dist,phpunit.xml.dist,composer.lock,FEATURE-MAP.md,FEATURE-GAP.md
+          ignore-warnings: true
+          include-experimental: false
+
+  zip:
+    name: Plugin ZIP
+    runs-on: ubuntu-latest
+    needs: [qa, plugin-check]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ZIP
+        run: |
+          mkdir -p dist
+          rsync -a --exclude '.git' --exclude '.github' --exclude 'vendor' --exclude 'tests' --exclude 'bin' --exclude 'composer.json' --exclude 'composer.lock' --exclude 'phpunit.xml.dist' --exclude 'phpcs.xml.dist' --exclude 'FEATURE-MAP.md' --exclude 'FEATURE-GAP.md' --exclude 'dist' ./ dist/oli-ajax-search/
+          cd dist
+          zip -r oli-ajax-search.zip oli-ajax-search
+          md5sum oli-ajax-search.zip | tee oli-ajax-search.zip.md5
+          sha256sum oli-ajax-search.zip | tee oli-ajax-search.zip.sha256
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oli-ajax-search
+          path: |
+            dist/oli-ajax-search.zip
+            dist/oli-ajax-search.zip.md5
+            dist/oli-ajax-search.zip.sha256

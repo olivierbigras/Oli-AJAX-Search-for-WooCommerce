@@ -1,0 +1,717 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Oli AJAX Search 0.2.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-20 00:00+0000\n"
+"PO-Revision-Date: 2026-10-20 00:00+0000\n"
+"Last-Translator: Olivier Bigras\n"
+"Language-Team: French (Canada)\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Oli\n"
+
+msgid "-- Disabled"
+msgstr "-- Désactivé"
+
+msgid "Active"
+msgstr "Actif"
+
+msgid "Add a live search field to this menu."
+msgstr "Ajouter un champ de recherche instantanée à ce menu."
+
+msgid "Add to Menu"
+msgstr "Ajouter au menu"
+
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+msgid "All product changes will be re-indexed automatically."
+msgstr "Tous les changements de produits seront réindexés automatiquement."
+
+msgid "Analytics"
+msgstr "Analytique"
+
+msgid "Analytics cleared."
+msgstr "Analytique effacée."
+
+msgid "Appearance"
+msgstr "Apparence"
+
+msgid "As a block — insert the Oli AJAX Search block in the editor."
+msgstr "Comme bloc — insérez le bloc Oli AJAX Search dans l’éditeur."
+
+msgid "As a menu item — go to the Menu Screen and add the menu item “Oli AJAX Search bar”. Done!"
+msgstr "Comme élément de menu — allez à l’écran Menus et ajoutez l’élément « Barre Oli AJAX Search ». Terminé!"
+
+msgid "As a widget — go to the Widgets Screen and choose “Oli AJAX Search bar”."
+msgstr "Comme widget — allez à l’écran Widgets et choisissez « Barre Oli AJAX Search »."
+
+msgid "Attention"
+msgstr "Attention"
+
+msgid "Attributes"
+msgstr "Attributs"
+
+msgid "Autocomplete"
+msgstr "Autocomplétion"
+
+msgid "Background color"
+msgstr "Couleur d’arrière-plan"
+
+msgid "Basic"
+msgstr "De base"
+
+msgid "Border color"
+msgstr "Couleur de bordure"
+
+msgid "Brand taxonomies"
+msgstr "Taxonomies de marques"
+
+msgid "Brands"
+msgstr "Marques"
+
+msgid "Breakpoint"
+msgstr "Point de rupture"
+
+msgid "Categories"
+msgstr "Catégories"
+
+msgid "Category IDs"
+msgstr "Identifiants de catégories"
+
+msgid "Check"
+msgstr "Vérification"
+
+msgid "Clear analytics"
+msgstr "Effacer l’analytique"
+
+msgid "Close search"
+msgstr "Fermer la recherche"
+
+msgid "Content"
+msgstr "Contenu"
+
+msgid "Covers anything that is displayed on the screen and simplifies the view to search bar + results."
+msgstr "Couvre tout ce qui est affiché à l’écran et simplifie la vue à la barre de recherche et aux résultats."
+
+msgid "Custom field keys"
+msgstr "Clés de champs personnalisés"
+
+msgid "Custom fields"
+msgstr "Champs personnalisés"
+
+msgid "Darkened background"
+msgstr "Arrière-plan assombri"
+
+msgid "Darkening the page background while autocomplete is active gives it stronger emphasis, minimizing elements (e.g., ads, carousels, and other page content) that could distract users from considering autocomplete suggestions."
+msgstr "Assombrir l’arrière-plan pendant l’autocomplétion met l’accent sur les suggestions et réduit les distractions (publicités, carrousels et autre contenu)."
+
+msgid "Details"
+msgstr "Détails"
+
+msgid "Elementor is active: you can also add the “Oli AJAX Search” widget."
+msgstr "Elementor est actif : vous pouvez aussi ajouter le widget « Oli AJAX Search »."
+
+msgid "Enable Scheduler"
+msgstr "Activer le planificateur"
+
+msgid "Enable search analytics"
+msgstr "Activer l’analytique de recherche"
+
+msgid "Excerpt"
+msgstr "Extrait"
+
+msgid "Exclude"
+msgstr "Exclure"
+
+msgid "Exclude the product group from the search results or allow search only among the indicated product group."
+msgstr "Exclure le groupe de produits des résultats ou n’autoriser la recherche que dans le groupe indiqué."
+
+msgid "Exclude “out of stock” products"
+msgstr "Exclure les produits « en rupture de stock »"
+
+msgid "Exclude/include products"
+msgstr "Exclure/inclure des produits"
+
+msgid "Export CSV"
+msgstr "Exporter en CSV"
+
+msgid "Extra views"
+msgstr "Vues supplémentaires"
+
+msgid "Featured"
+msgstr "En vedette"
+
+msgid "Filtering mode"
+msgstr "Mode de filtrage"
+
+msgid "Filters"
+msgstr "Filtres"
+
+msgid "Filters that specify the product group and taxonomy that will be affected by the above mode"
+msgstr "Filtres qui précisent le groupe de produits et la taxonomie concernés par le mode ci-dessus"
+
+msgid "Fuzziness"
+msgstr "Tolérance aux fautes"
+
+msgid "Fuzzy matching"
+msgstr "Correspondance approximative"
+
+msgid "Hard"
+msgstr "Élevée"
+
+msgid "Highlight color"
+msgstr "Couleur de surbrillance"
+
+msgid "Hits"
+msgstr "Occurrences"
+
+msgid "How to add search bar in your theme?"
+msgstr "Comment ajouter la barre de recherche dans votre thème?"
+
+msgid "How to add?"
+msgstr "Comment l’ajouter?"
+
+msgid "Icon on desktop, search bar on mobile"
+msgstr "Icône sur ordinateur, barre de recherche sur mobile"
+
+msgid "Icon on mobile, search bar on desktop"
+msgstr "Icône sur mobile, barre de recherche sur ordinateur"
+
+msgid "In most cases, you don't need to use the scheduler because the search index updates when you edit products. If you use import tools or custom code to refresh prices or bulk add/edit products, the indexing scheduler will be helpful."
+msgstr "Dans la plupart des cas, vous n’avez pas besoin du planificateur, car l’index se met à jour quand vous modifiez des produits. Il est utile si vous importez ou mettez à jour des produits en lot."
+
+msgid "In stock"
+msgstr "En stock"
+
+msgid "In the autocomplete results, a variation may appear when there's an exact SKU match."
+msgstr "Dans l’autocomplétion, une variation peut apparaître s’il y a une correspondance exacte du SKU."
+
+msgid "Include"
+msgstr "Inclure"
+
+msgid "Increases sales conversions."
+msgstr "Augmente les conversions de ventes."
+
+msgid "Index is up to date."
+msgstr "L’index est à jour."
+
+msgid "Index pages"
+msgstr "Indexer les pages"
+
+msgid "Index posts"
+msgstr "Indexer les articles"
+
+msgid "Index status"
+msgstr "État de l’index"
+
+msgid "Index tables"
+msgstr "Tables d’index"
+
+msgid "Indexed %1$d of %2$d items."
+msgstr "%1$d éléments indexés sur %2$d."
+
+msgid "Indexed 100%, %1$d products. Languages: %2$s."
+msgstr "Indexé à 100 %, %1$d produits. Langues : %2$s."
+
+msgid "Indexed documents"
+msgstr "Documents indexés"
+
+msgid "Indexer"
+msgstr "Indexeur"
+
+msgid "Indexer state"
+msgstr "État de l’indexeur"
+
+msgid "Indexing started."
+msgstr "Indexation commencée."
+
+msgid "Interval"
+msgstr "Intervalle"
+
+msgid "Label"
+msgstr "Libellé"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Last hit"
+msgstr "Dernière occurrence"
+
+msgid "Last results"
+msgstr "Derniers résultats"
+
+msgid "Layout"
+msgstr "Disposition"
+
+msgid "Limit"
+msgstr "Limite"
+
+msgid "Live AJAX product search bar."
+msgstr "Barre de recherche de produits AJAX instantanée."
+
+msgid "Live preview"
+msgstr "Aperçu en direct"
+
+msgid "Make your custom fields searchable from our search bar."
+msgstr "Rendez vos champs personnalisés recherchables depuis la barre de recherche."
+
+msgid "Make your products searchable by their Global Unique Identifier (GTIN, UPC, EAN or ISBN). In the autocomplete results, a variation may appear when there's an exact GUID match."
+msgstr "Rendez vos produits recherchables par identifiant unique mondial (GTIN, CUP, EAN ou ISBN). Une variation peut apparaître s’il y a une correspondance exacte."
+
+msgid "Max form width"
+msgstr "Largeur maximale du formulaire"
+
+msgid "Min characters to show autocomplete"
+msgstr "Nombre minimal de caractères pour afficher l’autocomplétion"
+
+msgid "Minimum characters"
+msgstr "Caractères minimum"
+
+msgid "Missing. Deactivate and reactivate the plugin."
+msgstr "Manquantes. Désactivez puis réactivez l’extension."
+
+msgid "More results label"
+msgstr "Libellé « plus de résultats »"
+
+msgid "No data yet."
+msgstr "Aucune donnée pour le moment."
+
+msgid "No results"
+msgstr "Aucun résultat"
+
+msgid "No results label"
+msgstr "Libellé « aucun résultat »"
+
+msgid "Non-products in autocomplete"
+msgstr "Éléments non produits dans l’autocomplétion"
+
+msgid "Normal"
+msgstr "Normale"
+
+msgid "Not scheduled."
+msgstr "Non planifié."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Oli AJAX Search"
+msgstr "Oli AJAX Search"
+
+msgid "Oli AJAX Search bar"
+msgstr "Barre Oli AJAX Search"
+
+msgid "Oli AJAX Search for WooCommerce"
+msgstr "Oli AJAX Search pour WooCommerce"
+
+msgid "Oli AJAX Search for WooCommerce requires WooCommerce to be installed and active."
+msgstr "Oli AJAX Search pour WooCommerce nécessite que WooCommerce soit installé et actif."
+
+msgid "Oli AJAX Search form"
+msgstr "Formulaire Oli AJAX Search"
+
+msgid "Oli AJAX Search might be displayed as a search bar, icon, or mixed of them."
+msgstr "Oli AJAX Search peut s’afficher comme barre de recherche, icône, ou un mélange des deux."
+
+msgid "Oli AJAX Search navigation item"
+msgstr "Élément de navigation Oli AJAX Search"
+
+msgid "Oli AJAX Search — critical searches"
+msgstr "Oli AJAX Search — recherches critiques"
+
+msgid "Oli provides two different styles of search bars: Rectangle and Oval. Rectangle has a rectangular shape while Oval is a bean-shaped bar with curvy and smooth edges."
+msgstr "Oli propose deux styles de barre : Rectangle et Ovale. Rectangle a une forme rectangulaire; Ovale est une barre en forme de haricot aux bords arrondis."
+
+msgid "On sale"
+msgstr "En solde"
+
+msgid "Open search"
+msgstr "Ouvrir la recherche"
+
+msgid "Open search bar"
+msgstr "Ouvrir la barre de recherche"
+
+msgid "Optional. Words removed from queries and the index. Comma-separated."
+msgstr "Facultatif. Mots retirés des requêtes et de l’index. Séparés par des virgules."
+
+msgid "Other colors"
+msgstr "Autres couleurs"
+
+msgid "Out of stock"
+msgstr "En rupture de stock"
+
+msgid "Oval"
+msgstr "Ovale"
+
+msgid "Oval (compact version)"
+msgstr "Ovale (version compacte)"
+
+msgid "Overlay on mobile"
+msgstr "Superposition sur mobile"
+
+msgid "PHP version"
+msgstr "Version de PHP"
+
+msgid "Pages"
+msgstr "Pages"
+
+msgid "Placeholder"
+msgstr "Texte indicatif"
+
+msgid "Posts"
+msgstr "Articles"
+
+msgid "Preloader"
+msgstr "Indicateur de chargement"
+
+msgid "Present"
+msgstr "Présentes"
+
+msgid "Product IDs"
+msgstr "Identifiants de produits"
+
+msgid "Products"
+msgstr "Produits"
+
+msgid "Products search"
+msgstr "Recherche de produits"
+
+msgid "Products search scope"
+msgstr "Portée de la recherche de produits"
+
+msgid "Queries are stored on this site only. Nothing is sent to remote services."
+msgstr "Les requêtes sont stockées uniquement sur ce site. Rien n’est envoyé à des services distants."
+
+msgid "Queries with no results"
+msgstr "Requêtes sans résultat"
+
+msgid "Query"
+msgstr "Requête"
+
+msgid "Rebuild index"
+msgstr "Reconstruire l’index"
+
+msgid "Recent searches"
+msgstr "Recherches récentes"
+
+msgid "Rectangle"
+msgstr "Rectangle"
+
+msgid "Refreshing translations in the index."
+msgstr "Actualisation des traductions dans l’index."
+
+msgid "Relevance weights"
+msgstr "Pondérations de pertinence"
+
+msgid "Replace the search bars"
+msgstr "Remplacer les barres de recherche"
+
+msgid "Replace them"
+msgstr "Les remplacer"
+
+msgid "Returns suggestions based on likely relevance, even though a search keyword may not exactly match. E.g if you type “ipho<b>m</b>e” you get the same results as for “iphone”."
+msgstr "Propose des suggestions selon la pertinence probable, même si le mot-clé ne correspond pas exactement. Ex. : « ipho<b>m</b>e » donne les mêmes résultats que « iphone »."
+
+msgid "SKU"
+msgstr "UGS"
+
+msgid "Sale"
+msgstr "Solde"
+
+msgid "Schedule time"
+msgstr "Heure planifiée"
+
+msgid "Scheduling indexing"
+msgstr "Planification de l’indexation"
+
+msgid "Search"
+msgstr "Recherche"
+
+msgid "Search Analytics"
+msgstr "Analytique de recherche"
+
+msgid "Search analytics system helps to eliminate search phrases that don’t return any results."
+msgstr "L’analytique de recherche aide à éliminer les expressions qui ne retournent aucun résultat."
+
+msgid "Search bar"
+msgstr "Barre de recherche"
+
+msgid "Search bar underlay"
+msgstr "Sous-couche de la barre de recherche"
+
+msgid "Search bars"
+msgstr "Barres de recherche"
+
+msgid "Search config"
+msgstr "Configuration de recherche"
+
+msgid "Search endpoint"
+msgstr "Point de terminaison de recherche"
+
+msgid "Search for products..."
+msgstr "Rechercher des produits..."
+
+msgid "Search form"
+msgstr "Formulaire de recherche"
+
+msgid "Search icon"
+msgstr "Icône de recherche"
+
+msgid "Search icon color"
+msgstr "Couleur de l’icône de recherche"
+
+msgid "Search in GUID"
+msgstr "Rechercher dans le GUID"
+
+msgid "Search in SKU"
+msgstr "Rechercher dans le SKU"
+
+msgid "Search in attributes"
+msgstr "Rechercher dans les attributs"
+
+msgid "Search in categories"
+msgstr "Rechercher dans les catégories"
+
+msgid "Search in custom fields"
+msgstr "Rechercher dans les champs personnalisés"
+
+msgid "Search in description"
+msgstr "Rechercher dans la description"
+
+msgid "Search in short description"
+msgstr "Rechercher dans la description courte"
+
+msgid "Search in tags"
+msgstr "Rechercher dans les étiquettes"
+
+msgid "Search in taxonomies"
+msgstr "Rechercher dans les taxonomies"
+
+msgid "Search input background"
+msgstr "Arrière-plan du champ de recherche"
+
+msgid "Search input border"
+msgstr "Bordure du champ de recherche"
+
+msgid "Search input placeholder"
+msgstr "Texte indicatif du champ de recherche"
+
+msgid "Search input text"
+msgstr "Texte du champ de recherche"
+
+msgid "See all products..."
+msgstr "Voir tous les produits..."
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "Show Details Panel"
+msgstr "Afficher le panneau de détails"
+
+msgid "Show SKU"
+msgstr "Afficher le SKU"
+
+msgid "Show add to cart in the details panel"
+msgstr "Afficher « Ajouter au panier » dans le panneau de détails"
+
+msgid "Show advanced settings"
+msgstr "Afficher les réglages avancés"
+
+msgid "Show brands"
+msgstr "Afficher les marques"
+
+msgid "Show categories"
+msgstr "Afficher les catégories"
+
+msgid "Show featured badge"
+msgstr "Afficher le badge en vedette"
+
+msgid "Show pages"
+msgstr "Afficher les pages"
+
+msgid "Show posts"
+msgstr "Afficher les articles"
+
+msgid "Show preloader"
+msgstr "Afficher l’indicateur de chargement"
+
+msgid "Show price"
+msgstr "Afficher le prix"
+
+msgid "Show product description"
+msgstr "Afficher la description du produit"
+
+msgid "Show product image"
+msgstr "Afficher l’image du produit"
+
+msgid "Show sale badge"
+msgstr "Afficher le badge solde"
+
+msgid "Show stock status"
+msgstr "Afficher l’état du stock"
+
+msgid "Show submit button"
+msgstr "Afficher le bouton d’envoi"
+
+msgid "Show tags"
+msgstr "Afficher les étiquettes"
+
+msgid "Show widget with critical searches in Dashboard"
+msgstr "Afficher le widget des recherches critiques au tableau de bord"
+
+msgid "Soft"
+msgstr "Légère"
+
+msgid "Speed up search!"
+msgstr "Accélérez la recherche!"
+
+msgid "Starting"
+msgstr "Démarrage"
+
+msgid "Status"
+msgstr "État"
+
+msgid "Status:"
+msgstr "État :"
+
+msgid "Stopwords"
+msgstr "Mots vides"
+
+msgid "Style"
+msgstr "Style"
+
+msgid "Suggestion background"
+msgstr "Arrière-plan des suggestions"
+
+msgid "Suggestion selected"
+msgstr "Suggestion sélectionnée"
+
+msgid "Suggestions colors"
+msgstr "Couleurs des suggestions"
+
+msgid "Synonyms"
+msgstr "Synonymes"
+
+msgid "Synonyms should be separated by a comma. Each new synonyms group is entered in a new line. You can use a phrase instead of a single word. <br /> <br />Sample list:<br /> <br /><span>sofa, couch, davenport, divan, settee<br />big, grand, great, large, outsize</span>"
+msgstr "Les synonymes doivent être séparés par une virgule. Chaque nouveau groupe s’écrit sur une nouvelle ligne. Vous pouvez utiliser une expression. <br /> <br />Exemple :<br /> <br /><span>sofa, canapé, divan<br />grand, gros, large</span>"
+
+msgid "Tags"
+msgstr "Étiquettes"
+
+msgid "Taxonomies"
+msgstr "Taxonomies"
+
+msgid "Text color"
+msgstr "Couleur du texte"
+
+msgid "The Details Panel is an additional container for extended information. The details change dynamically when the cursor hovers over one of the suggestions."
+msgstr "Le panneau de détails est un contenant supplémentaire. Son contenu change dynamiquement lorsque le curseur survole une suggestion."
+
+msgid "The current search history is presented when the user clicked/taped on the search bar, but hasn't yet typed the query. The history includes the last searched products and phrases."
+msgstr "L’historique s’affiche lorsque l’utilisateur clique ou tape dans la barre sans encore saisir de requête. Il comprend les derniers produits et expressions recherchés."
+
+msgid "The following HTML tags are allowed:<br /> <code>h1-h6,p,ul,ol,li,b,em,br,div,span,a</code>."
+msgstr "Les balises HTML suivantes sont permises :<br /> <code>h1-h6,p,ul,ol,li,b,em,br,div,span,a</code>."
+
+msgid "The index is empty. Rebuild it from the Indexer tab."
+msgstr "L’index est vide. Reconstruisez-le depuis l’onglet Indexeur."
+
+msgid "The search will open as an overlay on mobile"
+msgstr "La recherche s’ouvrira en superposition sur mobile"
+
+msgid "There are five easy ways to display the search bar in your theme:"
+msgstr "Il y a cinq façons simples d’afficher la barre de recherche dans votre thème :"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "To display the magnifier icon leave this field empty."
+msgstr "Laissez ce champ vide pour afficher l’icône de loupe."
+
+msgid "Too many search requests. Please wait a moment."
+msgstr "Trop de requêtes de recherche. Veuillez patienter un moment."
+
+msgid "Top queries"
+msgstr "Requêtes les plus fréquentes"
+
+msgid "Troubleshooting"
+msgstr "Dépannage"
+
+msgid "Unable to write the CSV file."
+msgstr "Impossible d’écrire le fichier CSV."
+
+msgid "Upload preloader image"
+msgstr "Téléverser une image d’indicateur"
+
+msgid "Use the same relevance on the WooCommerce results page"
+msgstr "Utiliser la même pertinence sur la page de résultats WooCommerce"
+
+msgid "User search history"
+msgstr "Historique de recherche de l’utilisateur"
+
+msgid "Using PHP — <code>echo do_shortcode('[oli_search]');</code>"
+msgstr "Avec PHP — <code>echo do_shortcode('[oli_search]');</code>"
+
+msgid "Using a shortcode — <code>[oli_search]</code>"
+msgstr "Avec un code court — <code>[oli_search]</code>"
+
+msgid "WP-Cron maintenance"
+msgstr "Maintenance WP-Cron"
+
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+msgid "WooCommerce is required."
+msgstr "WooCommerce est requis."
+
+msgid "You are not allowed to change this setting."
+msgstr "Vous n’êtes pas autorisé à modifier ce réglage."
+
+msgid "You are not allowed to clear analytics."
+msgstr "Vous n’êtes pas autorisé à effacer l’analytique."
+
+msgid "You are not allowed to export analytics."
+msgstr "Vous n’êtes pas autorisé à exporter l’analytique."
+
+msgid "You are not allowed to rebuild the index."
+msgstr "Vous n’êtes pas autorisé à reconstruire l’index."
+
+msgid "You are not allowed to view the index."
+msgstr "Vous n’êtes pas autorisé à voir l’index."
+
+msgid "You are using the %s theme. We support common WooCommerce themes so you can easily replace all default search bars."
+msgstr "Vous utilisez le thème %s. Nous prenons en charge les thèmes WooCommerce courants afin de remplacer facilement les barres de recherche par défaut."
+
+msgid "You do not have permission to access this page."
+msgstr "Vous n’avez pas la permission d’accéder à cette page."
+
+msgid "daily"
+msgstr "quotidien"
+
+msgid "maximum number of suggestions"
+msgstr "nombre maximal de suggestions"
+
+msgid "px"
+msgstr "px"
+
+msgid "px. To set 100% width leave blank"
+msgstr "px. Laissez vide pour une largeur de 100 %"
+
+msgid "searching also in variable products GUID"
+msgstr "recherche aussi dans le GUID des produits variables"
+
+msgid "searching also in variable products SKU"
+msgstr "recherche aussi dans le SKU des produits variables"
+
+msgid "select the custom fields you want to add to the search scope"
+msgstr "sélectionnez les champs personnalisés à ajouter à la portée de recherche"
+
+msgid "show images"
+msgstr "afficher les images"
+
+msgid "weekly"
+msgstr "hebdomadaire"
+

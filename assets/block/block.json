@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "oli-ajax-search/search-form",
+	"title": "Oli AJAX Search",
+	"category": "woocommerce",
+	"icon": "search",
+	"description": "Live AJAX search bar for WooCommerce.",
+	"textdomain": "oli-ajax-search",
+	"keywords": [ "search", "woocommerce", "ajax" ],
+	"attributes": {
+		"layout": {
+			"type": "string",
+			"default": "classic"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	}
+}
