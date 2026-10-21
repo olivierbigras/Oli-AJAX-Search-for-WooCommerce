@@ -5,7 +5,7 @@ Tags: woocommerce, ajax search, live search, product search, autocomplete
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 9.0
@@ -70,7 +70,7 @@ Yes, when that option is enabled. Submitting the form or using "See all results"
 
 = Are any data sent to remote servers? =
 
-No. Analytics stay in your database. There are no tracking pixels and no external API calls.
+No, not by default. Analytics stay in your database. There are no tracking pixels and no plugin-initiated API calls. See **External services** below.
 
 = What is the shortcode? =
 
@@ -78,10 +78,28 @@ No. Analytics stay in your database. There are no tracking pixels and no externa
 
 Layouts: `classic`, `icon`, `icon-flexible`, `icon-flexible-inv`.
 
+== External services ==
+
+This plugin does not phone home. Search suggestions, the product index, and analytics stay on your WordPress site. It does not call olivierbigras.com, PayPal, Google, Cloudflare Turnstile, Carto, Leaflet, Google Sheets, Google Fonts, or Adobe Typekit.
+
+= Optional custom preloader image =
+
+If you paste a preloader image URL in WooCommerce → Oli AJAX Search → Search bar, the visitor's browser requests that file from the host you entered. The plugin sends no other data to that host. Leave the field empty to use the built-in CSS spinner (no remote request).
+
+= Author and donate links =
+
+The plugin header and this readme link to https://olivierbigras.com/. Those links are documentation only. The plugin never requests that site.
+
 == Changelog ==
 
+= 0.2.1 =
+* Escaped remaining widget, admin, and Elementor output.
+* Moved the Menus-screen script into an enqueued file.
+* Documented external services (none by default; optional preloader URL is opt-in).
+* Upgrade copies any remapped options to the current oli_as_ keys, then deletes the old keys.
+
 = 0.2.0 =
-* Settings tabs aligned with the original premium reference: Starting, Search bar, Autocomplete, Search config, Analytics, Indexer, Troubleshooting.
+* Settings tabs: Starting, Search bar, Autocomplete, Search config, Analytics, Indexer, Troubleshooting.
 * Public search rate limit, catalog-visibility filtering, conditional assets, query cache, CSV export, scheduler, Elementor, qTranslate-XT, fr_CA.
 
 = 0.1.1 =
@@ -91,6 +109,9 @@ Layouts: `classic`, `icon`, `icon-flexible`, `icon-flexible-inv`.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.2.1 =
+Settings and index data are kept. Rebuild the index only if suggestions look stale.
 
 = 0.2.0 =
 Rebuild the index after updating so visibility rules and new filter fields apply.

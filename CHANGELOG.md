@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+- Escape widget wrappers, admin class names, and shortcode HTML with `wp_kses_post` / `esc_attr`.
+- Extract the Menus-screen inline script to `assets/js/admin-nav-menu.js` and enqueue it with `wp_localize_script`.
+- Add `readme.txt` **External services** (no default remote calls; custom preloader URL is opt-in).
+- Upgrade migrates remapped options onto the current `oli_as_` keys and deletes the old keys.
+
 ## 0.2.0
 
 - Settings tabs now match the original premium order: Starting, Search bar, Autocomplete, Search config, Analytics, Indexer, Troubleshooting.

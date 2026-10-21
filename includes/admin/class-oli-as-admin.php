@@ -164,7 +164,7 @@ class Oli_AS_Admin {
 		$advanced  = Oli_AS_Settings::enabled( 'show_advanced' );
 		$form_tabs = array( 'starting', 'search_bar', 'autocomplete', 'search_config', 'analytics', 'indexer' );
 		?>
-		<div class="wrap oli-as-admin<?php echo $advanced ? ' is-advanced' : ''; ?>">
+		<div class="wrap oli-as-admin<?php echo esc_attr( $advanced ? ' is-advanced' : '' ); ?>">
 			<h1><?php esc_html_e( 'Oli AJAX Search for WooCommerce', 'oli-ajax-search' ); ?></h1>
 			<p class="oli-as-advanced-toggle">
 				<label>
@@ -175,12 +175,12 @@ class Oli_AS_Admin {
 			<?php if ( in_array( $tab, array( 'search_bar', 'autocomplete' ), true ) ) : ?>
 				<div class="oli-as-preview">
 					<p class="description"><?php esc_html_e( 'Live preview', 'oli-ajax-search' ); ?></p>
-					<?php echo Oli_AS_Shortcode::instance()->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo wp_kses_post( Oli_AS_Shortcode::instance()->render() ); ?>
 				</div>
 			<?php endif; ?>
 			<nav class="nav-tab-wrapper">
 				<?php foreach ( $tabs as $key => $label ) : ?>
-					<a class="nav-tab <?php echo $tab === $key ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=oli-ajax-search&tab=' . $key ) ); ?>"><?php echo esc_html( $label ); ?></a>
+					<a class="nav-tab <?php echo esc_attr( $tab === $key ? 'nav-tab-active' : '' ); ?>" href="<?php echo esc_url( admin_url( 'admin.php?page=oli-ajax-search&tab=' . $key ) ); ?>"><?php echo esc_html( $label ); ?></a>
 				<?php endforeach; ?>
 			</nav>
 
@@ -802,8 +802,7 @@ class Oli_AS_Admin {
 	 */
 	protected function checkbox( $key, $label, $settings, $desc = '', $help = '', $advanced = false ) {
 		$checked = ! empty( $settings[ $key ] ) && '0' !== (string) $settings[ $key ];
-		$class   = $advanced ? ' class="oli-as-advanced"' : '';
-		echo '<tr' . $class . '><th scope="row">' . esc_html( $label ) . '</th><td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<tr' . ( $advanced ? ' class="' . esc_attr( 'oli-as-advanced' ) . '"' : '' ) . '><th scope="row">' . esc_html( $label ) . '</th><td>';
 		echo '<input type="hidden" name="' . esc_attr( Oli_AS_Settings::OPTION ) . '[_seen][' . esc_attr( $key ) . ']" value="1" />';
 		echo '<label><input type="checkbox" name="' . esc_attr( Oli_AS_Settings::OPTION ) . '[' . esc_attr( $key ) . ']" value="1" ' . checked( $checked, true, false ) . ' /> ' . esc_html( $desc ? $desc : $label ) . '</label>';
 		if ( $help ) {

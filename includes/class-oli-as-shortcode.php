@@ -117,7 +117,7 @@ class Oli_AS_Shortcode {
 					<?php endif; ?>
 				<?php endif; ?>
 				<?php if ( $show_submit ) : ?>
-					<button type="submit" class="oli-as-submit<?php echo '' !== $submit_text ? ' has-text' : ''; ?>">
+					<button type="submit" class="oli-as-submit<?php echo esc_attr( '' !== $submit_text ? ' has-text' : '' ); ?>">
 						<?php if ( '' !== $submit_text ) : ?>
 							<?php echo esc_html( $submit_text ); ?>
 						<?php else : ?>

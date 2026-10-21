@@ -91,3 +91,4 @@ require dirname( __DIR__ ) . '/includes/class-oli-as-language.php';
 require dirname( __DIR__ ) . '/includes/class-oli-as-settings.php';
 require dirname( __DIR__ ) . '/includes/class-oli-as-visibility.php';
 require dirname( __DIR__ ) . '/includes/class-oli-as-rate-limit.php';
+require dirname( __DIR__ ) . '/includes/class-oli-as-install.php';

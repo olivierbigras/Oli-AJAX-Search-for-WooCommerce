@@ -45,8 +45,39 @@ class Oli_AS_Menu {
 	 */
 	public function init() {
 		add_action( 'admin_head-nav-menus.php', array( $this, 'add_metabox' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin' ) );
 		add_filter( 'walker_nav_menu_start_el', array( $this, 'render_item' ), 10, 4 );
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'setup_item' ) );
+	}
+
+	/**
+	 * Enqueues the Menus screen script.
+	 *
+	 * @since 0.2.1
+	 *
+	 * @param string $hook Current admin hook.
+	 * @return void
+	 */
+	public function enqueue_admin( $hook ) {
+		if ( 'nav-menus.php' !== $hook ) {
+			return;
+		}
+
+		wp_enqueue_script(
+			'oli-as-nav-menu',
+			OLI_AS_URL . 'assets/js/admin-nav-menu.js',
+			array( 'jquery', 'nav-menu' ),
+			OLI_AS_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'oli-as-nav-menu',
+			'oliAsNavMenu',
+			array(
+				'title' => __( 'Search', 'oli-ajax-search' ),
+			)
+		);
 	}
 
 	/**
@@ -86,41 +117,6 @@ class Oli_AS_Menu {
 				</span>
 			</p>
 		</div>
-		<script>
-		(function(){
-			var button = document.getElementById('submit-oli-as-menu-item');
-			if (!button) { return; }
-			button.addEventListener('click', function(event){
-				event.preventDefault();
-				var box = document.getElementById('oli-as-menu-item');
-				if (!box) { return; }
-				var form = box.closest('form') || document.getElementById('nav-menu-meta');
-				var input = document.createElement('input');
-				input.type = 'hidden';
-				input.name = 'menu-item[-1][menu-item-title]';
-				input.value = '<?php echo esc_js( __( 'Search', 'oli-ajax-search' ) ); ?>';
-				box.appendChild(input);
-				var type = document.createElement('input');
-				type.type = 'hidden';
-				type.name = 'menu-item[-1][menu-item-type]';
-				type.value = 'custom';
-				box.appendChild(type);
-				var url = document.createElement('input');
-				url.type = 'hidden';
-				url.name = 'menu-item[-1][menu-item-url]';
-				url.value = '#oli-ajax-search';
-				box.appendChild(url);
-				var classes = document.createElement('input');
-				classes.type = 'hidden';
-				classes.name = 'menu-item[-1][menu-item-classes]';
-				classes.value = 'oli-as-menu-item';
-				box.appendChild(classes);
-				if (window.wpNavMenu && typeof window.wpNavMenu.addItemToMenu === 'function') {
-					window.wpNavMenu.addItemToMenu(jQuery(box).find('input').serialize(), 'oli-as-menu-item', function(){});
-				}
-			});
-		})();
-		</script>
 		<?php
 	}
 

@@ -35,6 +35,7 @@ class Oli_AS_Install {
 			add_option( Oli_AS_Settings::OPTION, Oli_AS_Settings::defaults(), '', false );
 		}
 		add_option( 'oli_as_db_version', self::DB_VERSION, '', false );
+		self::migrate_options();
 		add_option(
 			'oli_as_index_status',
 			array(
@@ -200,6 +201,98 @@ class Oli_AS_Install {
 		$current = get_option( 'oli_as_db_version', '' );
 		if ( self::DB_VERSION !== $current ) {
 			self::create_tables();
+		}
+
+		self::migrate_options();
+	}
+
+	/**
+	 * Legacy option names that must be copied to the current oli_as_ keys.
+	 *
+	 * 0.1.x already used the unique oli_as_ prefix. The map is the single
+	 * place for any future rename so stored settings are not lost.
+	 *
+	 * @since 0.2.1
+	 *
+	 * @return array<string, string>
+	 */
+	public static function legacy_option_map() {
+		return array();
+	}
+
+	/**
+	 * Plans a lossless copy of old option keys onto new keys.
+	 *
+	 * @since 0.2.1
+	 *
+	 * @param array<string, mixed>  $stored Existing option_name => value. Missing keys use false.
+	 * @param array<string, string> $map    Old option name => new option name.
+	 * @return array{keep: array<string, mixed>, delete: array<int, string>}
+	 */
+	public static function plan_option_migration( $stored, $map ) {
+		$keep   = is_array( $stored ) ? $stored : array();
+		$delete = array();
+
+		foreach ( $map as $old => $new ) {
+			$has_new = array_key_exists( $new, $keep ) && false !== $keep[ $new ];
+			$has_old = array_key_exists( $old, $keep ) && false !== $keep[ $old ];
+
+			if ( ! $has_new && $has_old ) {
+				$keep[ $new ] = $keep[ $old ];
+			}
+
+			if ( $has_old && $old !== $new ) {
+				unset( $keep[ $old ] );
+				$delete[] = $old;
+			}
+		}
+
+		return array(
+			'keep'   => $keep,
+			'delete' => array_values( array_unique( $delete ) ),
+		);
+	}
+
+	/**
+	 * Copies legacy options onto the current prefixed keys, then deletes the old keys.
+	 *
+	 * @since 0.2.1
+	 *
+	 * @return void
+	 */
+	public static function migrate_options() {
+		$map = self::legacy_option_map();
+		if ( empty( $map ) ) {
+			if ( defined( 'OLI_AS_VERSION' ) ) {
+				update_option( 'oli_as_data_version', OLI_AS_VERSION, false );
+			}
+			return;
+		}
+
+		$stored = array();
+		foreach ( $map as $old => $new ) {
+			$stored[ $old ] = get_option( $old, false );
+			$stored[ $new ] = get_option( $new, false );
+		}
+
+		$plan = self::plan_option_migration( $stored, $map );
+
+		foreach ( $map as $old => $new ) {
+			if ( ! array_key_exists( $new, $plan['keep'] ) ) {
+				continue;
+			}
+			if ( false === get_option( $new, false ) && false !== $plan['keep'][ $new ] ) {
+				add_option( $new, $plan['keep'][ $new ], '', false );
+			}
+			unset( $old );
+		}
+
+		foreach ( $plan['delete'] as $old ) {
+			delete_option( $old );
+		}
+
+		if ( defined( 'OLI_AS_VERSION' ) ) {
+			update_option( 'oli_as_data_version', OLI_AS_VERSION, false );
 		}
 	}
 }

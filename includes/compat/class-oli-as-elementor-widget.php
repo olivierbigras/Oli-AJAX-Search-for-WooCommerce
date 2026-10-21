@@ -117,11 +117,12 @@ class Oli_AS_Elementor_Widget extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$layout   = isset( $settings['layout'] ) ? $settings['layout'] : 'classic';
 
-		$html = Oli_AS_Shortcode::instance()->render(
-			array(
-				'layout' => $layout,
+		echo wp_kses_post(
+			Oli_AS_Shortcode::instance()->render(
+				array(
+					'layout' => $layout,
+				)
 			)
 		);
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

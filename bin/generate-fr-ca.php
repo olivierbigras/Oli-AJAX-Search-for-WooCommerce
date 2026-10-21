@@ -255,7 +255,7 @@ foreach ( $strings as $string ) {
 }
 
 $po  = "msgid \"\"\nmsgstr \"\"\n";
-$po .= "\"Project-Id-Version: Oli AJAX Search 0.2.0\\n\"\n";
+$po .= "\"Project-Id-Version: Oli AJAX Search 0.2.1\\n\"\n";
 $po .= "\"Report-Msgid-Bugs-To: \\n\"\n";
 $po .= "\"POT-Creation-Date: 2026-10-20 00:00+0000\\n\"\n";
 $po .= "\"PO-Revision-Date: 2026-10-20 00:00+0000\\n\"\n";

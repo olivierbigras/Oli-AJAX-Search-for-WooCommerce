@@ -26,6 +26,7 @@ delete_option( 'oli_as_db_version' );
 delete_option( 'oli_as_index_status' );
 delete_option( 'oli_as_cache_ver' );
 delete_option( 'oli_as_last_scheduled_rebuild' );
+delete_option( 'oli_as_data_version' );
 
 wp_clear_scheduled_hook( 'oli_as_cron_maintenance' );
 wp_clear_scheduled_hook( 'oli_as_index_batch' );

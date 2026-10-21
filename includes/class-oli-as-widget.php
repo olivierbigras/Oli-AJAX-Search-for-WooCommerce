@@ -43,21 +43,24 @@ class Oli_AS_Widget extends WP_Widget {
 		$layout      = isset( $instance['layout'] ) ? $instance['layout'] : 'classic';
 		$placeholder = isset( $instance['placeholder'] ) ? $instance['placeholder'] : '';
 
-		echo $args['before_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $args['before_widget'] );
 
 		if ( '' !== $title ) {
-			echo $args['before_title'] . esc_html( apply_filters( 'widget_title', $title ) ) . $args['after_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post( $args['before_title'] );
+			echo esc_html( apply_filters( 'widget_title', $title ) );
+			echo wp_kses_post( $args['after_title'] );
 		}
 
-		$html = Oli_AS_Shortcode::instance()->render(
-			array(
-				'layout'      => $layout,
-				'placeholder' => $placeholder,
+		echo wp_kses_post(
+			Oli_AS_Shortcode::instance()->render(
+				array(
+					'layout'      => $layout,
+					'placeholder' => $placeholder,
+				)
 			)
 		);
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $args['after_widget'] );
 	}
 
 	/**

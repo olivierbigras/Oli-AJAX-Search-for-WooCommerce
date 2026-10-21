@@ -3,7 +3,7 @@
  * Plugin Name:       Oli AJAX Search for WooCommerce
  * Plugin URI:        https://github.com/olivierbigras/Oli-AJAX-Search-for-WooCommerce
  * Description:       Fast live AJAX search for WooCommerce with a custom index, typo tolerance, and multilingual support.
- * Version:           0.2.0
+ * Version:           0.2.1
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Author:            Olivier Bigras
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OLI_AS_VERSION', '0.2.0' );
+define( 'OLI_AS_VERSION', '0.2.1' );
 define( 'OLI_AS_FILE', __FILE__ );
 define( 'OLI_AS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OLI_AS_URL', plugin_dir_url( __FILE__ ) );
