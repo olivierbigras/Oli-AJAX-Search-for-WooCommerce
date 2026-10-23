@@ -5,7 +5,7 @@ Tags: woocommerce, ajax search, live search, product search, autocomplete
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 9.0
@@ -92,6 +92,9 @@ The plugin header and this readme link to https://olivierbigras.com/. Those link
 
 == Changelog ==
 
+= 0.2.2 =
+* Exclude development files from the distributable ZIP (.distignore / export-ignore).
+
 = 0.2.1 =
 * Escaped remaining widget, admin, and Elementor output.
 * Moved the Menus-screen script into an enqueued file.
@@ -109,6 +112,9 @@ The plugin header and this readme link to https://olivierbigras.com/. Those link
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.2.2 =
+Packaging-only release. Settings and index data are unchanged.
 
 = 0.2.1 =
 Settings and index data are kept. Rebuild the index only if suggestions look stale.

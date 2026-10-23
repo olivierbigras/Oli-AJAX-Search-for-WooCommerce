@@ -3,7 +3,7 @@
 Fast live AJAX search for WooCommerce. Independent GPL plugin with a custom index, typo tolerance, and multilingual support.
 
 **Requires:** WordPress 6.5+, PHP 7.4+, WooCommerce 9.0+  
-**Version:** 0.2.1  
+**Version:** 0.2.2  
 **License:** GPL-2.0-or-later
 
 ## Features

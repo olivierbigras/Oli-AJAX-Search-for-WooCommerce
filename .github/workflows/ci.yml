@@ -45,7 +45,7 @@ jobs:
         with:
           slug: oli-ajax-search
           exclude-directories: tests,vendor,bin,.github
-          exclude-files: phpcs.xml.dist,phpunit.xml.dist,composer.lock,FEATURE-MAP.md,FEATURE-GAP.md
+          exclude-files: phpcs.xml.dist,phpunit.xml.dist,composer.lock,FEATURE-MAP.md,FEATURE-GAP.md,.gitattributes,.distignore
           ignore-warnings: true
           include-experimental: false
 
@@ -59,9 +59,8 @@ jobs:
       - name: Build ZIP
         run: |
           mkdir -p dist
-          rsync -a --exclude '.git' --exclude '.github' --exclude 'vendor' --exclude 'tests' --exclude 'bin' --exclude 'composer.json' --exclude 'composer.lock' --exclude 'phpunit.xml.dist' --exclude 'phpcs.xml.dist' --exclude 'FEATURE-MAP.md' --exclude 'FEATURE-GAP.md' --exclude 'dist' ./ dist/oli-ajax-search/
+          git archive --format=zip --prefix=oli-ajax-search/ HEAD -o dist/oli-ajax-search.zip
           cd dist
-          zip -r oli-ajax-search.zip oli-ajax-search
           md5sum oli-ajax-search.zip | tee oli-ajax-search.zip.md5
           sha256sum oli-ajax-search.zip | tee oli-ajax-search.zip.sha256
 

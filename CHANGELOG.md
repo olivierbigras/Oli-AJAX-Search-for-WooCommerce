@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+- Exclude development files from the distributable ZIP via `.distignore` and `.gitattributes` `export-ignore`.
+
 ## 0.2.1
 
 - Escape widget wrappers, admin class names, and shortcode HTML with `wp_kses_post` / `esc_attr`.

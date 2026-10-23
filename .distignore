@@ -1,0 +1,17 @@
+# Development and tooling files excluded from the distributable plugin ZIP.
+.git
+.github
+tests
+bin
+scripts
+node_modules
+vendor
+phpcs.xml*
+phpunit.xml*
+composer.json
+composer.lock
+package*.json
+.gitignore
+.distignore
+.gitattributes
+*.md
